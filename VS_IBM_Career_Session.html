@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Curiosity to Careers — Victoria School × IBM</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#161616; --ink-2:#525252; --ink-3:#8d8d8d; --line:#e0e0e0; --wash:#f4f4f4; --paper:#ffffff;
+  --blue:#0f62fe; --blue-10:#edf5ff; --blue-20:#d0e2ff;
+  --purple:#8a3ffc; --purple-10:#f6f2ff; --purple-20:#e8daff;
+  --teal:#007d79; --teal-10:#d9fbfb; --teal-20:#9ef0f0;
+  --red:#da1e28; --red-10:#fff1f1; --green:#198038; --green-10:#defbe6; --yellow:#f1c21b;
+  --sans:"IBM Plex Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --serif:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:#e8e8e8;font-family:var(--sans);color:var(--ink);overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible,[contenteditable]:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.ico{width:1em;height:1em;flex:none;display:inline-block;vertical-align:-.125em}
+
+/* ---------- stage ---------- */
+#stage{position:fixed;left:50%;top:50%;width:1600px;height:900px;background:var(--paper);transform-origin:center;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.12)}
+.slide{position:absolute;inset:0;padding:128px 128px 112px;display:flex;flex-direction:column;opacity:0;visibility:hidden;transform:translateX(48px);transition:opacity .55s var(--ease),transform .55s var(--ease),visibility 0s linear .55s}
+.slide.past{transform:translateX(-48px)}
+.slide.active{opacity:1;visibility:visible;transform:none;transition:opacity .55s var(--ease),transform .55s var(--ease),visibility 0s}
+.slide .notes{display:none}
+.center{justify-content:center;align-items:center;text-align:center}
+.vcenter{justify-content:center}
+
+[data-step]{opacity:0;transform:translateY(18px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+[data-step].shown{opacity:1;transform:none}
+
+/* chrome inside stage */
+.chrome-top{position:absolute;left:128px;right:128px;top:44px;display:flex;justify-content:space-between;align-items:center;font-size:18px;color:var(--ink-2);z-index:5;pointer-events:none}
+.brand{display:flex;gap:12px;align-items:center;font-weight:500;color:var(--ink)}
+.brand b{width:10px;height:10px;border-radius:50%;background:var(--blue);display:inline-block}
+.where{display:flex;gap:14px;align-items:center}
+.where .t{font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.progress{position:absolute;left:128px;right:128px;bottom:44px;height:4px;display:flex;gap:6px;z-index:5}
+.progress button{flex:var(--w);height:100%;border:0;padding:0;background:var(--line);border-radius:2px;position:relative;overflow:hidden}
+.progress button i{position:absolute;inset:0;width:var(--f,0%);background:var(--c);transition:width .5s var(--ease)}
+.progress button::after{content:attr(data-label);position:absolute;bottom:14px;left:0;font-size:15px;color:var(--ink-2);white-space:nowrap;opacity:0;transition:opacity .2s}
+.progress:hover button::after{opacity:1}
+.progress button{overflow:visible}
+.progress button i{border-radius:2px}
+
+/* ---------- type ---------- */
+.display{font-size:124px;line-height:.98;font-weight:600;letter-spacing:-.035em;margin:0}
+.title{font-size:66px;line-height:1.04;font-weight:600;letter-spacing:-.025em;margin:0 0 28px;max-width:1240px;text-wrap:balance}
+.lede{font-size:32px;line-height:1.38;color:var(--ink-2);margin:0;max-width:1000px;text-wrap:pretty}
+.say{font-family:var(--serif);font-style:italic;font-weight:400}
+.muted{color:var(--ink-2)}
+.big-no{font-size:300px;font-weight:700;letter-spacing:-.06em;line-height:.8;color:var(--blue)}
+
+/* ---------- hero ---------- */
+#dots{position:absolute;inset:0;width:1600px;height:900px}
+.hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;height:100%}
+.thread{display:flex;align-items:center;gap:0;margin:28px 0 36px}
+.thread .w{font-size:100px;font-weight:600;letter-spacing:-.04em;line-height:1;opacity:0;transform:translateY(24px);animation:rise .8s var(--ease) forwards}
+.thread .w:nth-child(1){animation-delay:.15s}
+.thread .w:nth-child(3){animation-delay:.9s}
+.thread .w:nth-child(5){animation-delay:1.65s;color:var(--blue)}
+.thread svg{width:96px;height:48px;margin:0 14px}
+.thread svg path{stroke:var(--ink-3);stroke-width:3;fill:none;stroke-dasharray:140;stroke-dashoffset:140;animation:draw .7s var(--ease) forwards}
+.thread svg:nth-child(2) path{animation-delay:.6s}
+.thread svg:nth-child(4) path{animation-delay:1.35s}
+@keyframes rise{to{opacity:1;transform:none}}
+@keyframes draw{to{stroke-dashoffset:0}}
+.hero-sub{font-size:30px;color:var(--ink-2);max-width:900px;line-height:1.4;opacity:0;animation:rise .8s var(--ease) 2.2s forwards}
+.hero-meta{margin-top:56px;display:flex;gap:40px;font-size:20px;color:var(--ink-2);opacity:0;animation:rise .8s var(--ease) 2.5s forwards}
+.hero-meta span{display:flex;gap:10px;align-items:center}
+.slide:not(.active) .thread .w,.slide:not(.active) .thread svg path,.slide:not(.active) .hero-sub,.slide:not(.active) .hero-meta{animation:none}
+
+/* ---------- agenda ---------- */
+.agenda{display:grid;grid-template-columns:1fr;gap:0;margin-top:12px;border-top:1px solid var(--line)}
+.agenda button{display:grid;grid-template-columns:150px 1fr 360px 40px;align-items:center;gap:24px;text-align:left;padding:20px 8px;border:0;border-bottom:1px solid var(--line);background:none;font-size:28px;transition:background .2s}
+.agenda button:hover{background:var(--wash)}
+.agenda .tm{font-weight:600;font-variant-numeric:tabular-nums;color:var(--c)}
+.agenda .who{font-size:20px;color:var(--ink-2)}
+.agenda .ico{color:var(--ink-3);font-size:24px}
+
+/* ---------- section divider ---------- */
+.divider{justify-content:center}
+.story{display:flex;align-items:center;gap:10px;margin-bottom:72px}
+.story span{height:6px;flex:1;border-radius:3px;background:var(--line)}
+.story span.done{background:var(--ink-3)}
+.story span.now{background:var(--c)}
+.div-time{font-size:34px;font-weight:600;color:var(--c);margin:0 0 20px;font-variant-numeric:tabular-nums}
+.div-title{font-size:100px;line-height:1;font-weight:600;letter-spacing:-.035em;margin:0 0 36px;max-width:1300px;text-wrap:balance}
+.div-speaker{font-size:30px;color:var(--ink-2);margin:0;display:flex;gap:14px;align-items:center}
+
+/* ---------- quiz ---------- */
+.quiz{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:24px}
+.opt{border:2px solid var(--line);background:var(--paper);border-radius:20px;padding:28px;text-align:left;min-height:230px;display:flex;flex-direction:column;justify-content:space-between;transition:all .35s var(--ease)}
+.opt .k{font-size:84px;font-weight:700;line-height:1;letter-spacing:-.04em}
+.opt .v{font-size:30px;font-weight:500;line-height:1.2}
+.opt:hover{border-color:var(--ink)}
+.opt.picked{border-color:var(--ink);background:var(--wash)}
+.revealed .opt:not([data-correct]){opacity:.28;transform:scale(.97)}
+.revealed .opt[data-correct]{background:var(--blue);border-color:var(--blue);color:#fff;transform:translateY(-8px)}
+.quiz-bar{display:flex;align-items:center;gap:24px;margin-top:36px;min-height:64px}
+.btn{display:inline-flex;align-items:center;gap:12px;border:0;border-radius:12px;padding:16px 26px;font-size:22px;font-weight:500;background:var(--ink);color:#fff;transition:transform .15s,background .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:var(--wash);color:var(--ink)}
+.btn.blue{background:var(--blue)}
+.after{font-size:30px;line-height:1.35;max-width:1100px;opacity:0;transform:translateY(10px);transition:all .5s var(--ease)}
+.revealed + .quiz-bar .after,.show-after .after{opacity:1;transform:none}
+.cards-hint{display:flex;gap:10px;align-items:center;font-size:20px;color:var(--ink-2);margin-top:-8px}
+
+/* ---------- word cloud ---------- */
+.cloud-box{position:relative;flex:1;border-radius:24px;background:var(--wash);overflow:hidden;margin:8px 0 20px}
+.cloud-box .empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--ink-3)}
+.word{position:absolute;font-weight:600;letter-spacing:-.02em;white-space:nowrap;line-height:1;transition:left .4s var(--ease),top .4s var(--ease);animation:pop .45s var(--ease)}
+@keyframes pop{from{transform:scale(.4);opacity:0}}
+.cloud-controls{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.cloud-controls input{font:inherit;font-size:22px;padding:14px 18px;border:2px solid var(--line);border-radius:12px;width:380px}
+.chip{border:1.5px solid var(--line);background:var(--paper);border-radius:999px;padding:10px 18px;font-size:20px;transition:all .2s}
+.chip:hover{border-color:var(--ink)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* ---------- flip cards ---------- */
+.flip-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:8px}
+.flip{perspective:1200px;height:250px;border:0;background:none;padding:0;text-align:left}
+.flip-in{position:relative;width:100%;height:100%;transition:transform .7s var(--ease);transform-style:preserve-3d}
+.flip.flipped .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;padding:26px;display:flex;flex-direction:column;justify-content:space-between}
+.front{background:var(--wash)}
+.front .ico{font-size:52px;color:var(--ink)}
+.front .nm{font-size:28px;font-weight:600;line-height:1.15}
+.front .q{font-size:17px;color:var(--ink-3)}
+.back{transform:rotateY(180deg);background:var(--blue);color:#fff}
+.back.not{background:var(--paper);color:var(--ink);border:2px solid var(--ink)}
+.back .verdict{font-size:40px;font-weight:700;letter-spacing:-.02em}
+.back .fact{font-size:19px;line-height:1.38}
+.legend{display:flex;gap:28px;font-size:22px;margin-bottom:22px;color:var(--ink-2);align-items:center}
+.legend b{display:inline-flex;align-items:center;justify-content:center;padding:6px 16px;border-radius:8px;font-size:20px;margin-right:10px}
+
+/* ---------- three pillars ---------- */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:40px}
+.pillar{border-top:4px solid var(--c);padding-top:28px}
+.pillar .ico{font-size:56px;color:var(--c)}
+.pillar h3{font-size:42px;margin:26px 0 12px;letter-spacing:-.02em}
+.pillar p{font-size:26px;line-height:1.4;color:var(--ink-2);margin:0}
+
+/* ---------- photo placeholder ---------- */
+.photo{position:relative;border-radius:24px;background:var(--wash);overflow:hidden;display:flex;align-items:center;justify-content:center;border:0;padding:0;color:var(--ink-3);font-size:20px}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.photo .ph{display:flex;flex-direction:column;align-items:center;gap:12px}
+.photo .ph .ico{font-size:44px}
+.photo:has(img) .ph{display:none}
+
+/* editable placeholders */
+[data-placeholder]{background:linear-gradient(transparent 88%,rgba(15,98,254,.35) 88%);}
+body.editing [data-edit]{outline:2px dashed var(--blue);outline-offset:4px;border-radius:4px;cursor:text}
+body.editing [data-edit]:focus{outline-style:solid;background:var(--blue-10)}
+
+/* ---------- conner opener ---------- */
+.split{display:grid;grid-template-columns:520px 1fr;gap:88px;align-items:center;height:100%}
+.split .photo{height:620px}
+.split .title{font-size:52px}
+.split .big-no{font-size:220px}
+
+/* ---------- journey ---------- */
+.journey{position:relative;margin-top:10px}
+.journey>svg{width:1344px;height:240px;display:block}
+.journey .base{stroke:var(--line);stroke-width:4;fill:none;stroke-dasharray:2 12;stroke-linecap:round}
+.journey .ink{stroke:var(--blue);stroke-width:5;fill:none;stroke-linecap:round}
+.journey .node{fill:var(--paper);stroke:var(--line);stroke-width:4;transition:all .4s}
+.journey .node.on{fill:var(--blue);stroke:var(--blue)}
+.journey .dot{fill:var(--blue)}
+.stages{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:10px}
+.stage h3{font-size:30px;margin:0 0 12px;letter-spacing:-.01em;display:flex;gap:12px;align-items:center}
+.stage h3 small{font-size:18px;font-weight:600;color:#fff;background:var(--blue);border-radius:999px;width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center}
+.stage p{font-size:22px;line-height:1.42;color:var(--ink-2);margin:0 0 10px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-size:17px;padding:6px 12px;border-radius:999px;background:var(--blue-10);color:var(--blue);font-weight:500}
+.tag.p{background:var(--purple-10);color:var(--purple)}
+.tag.t{background:var(--teal-10);color:var(--teal)}
+
+/* ---------- loop ---------- */
+.loop{position:relative;width:640px;height:640px;margin:0 auto}
+.loop>svg{position:absolute;inset:0}
+.loop .ring{fill:none;stroke:var(--line);stroke-width:3}
+.loop .arc{fill:none;stroke:var(--blue);stroke-width:8;stroke-linecap:round;transform-origin:320px 320px;animation:spin 6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loop .st{position:absolute;width:220px;text-align:center;font-size:40px;font-weight:600;letter-spacing:-.02em;background:var(--paper);padding:10px}
+.loop .st .ico{display:block;margin:0 auto 8px;font-size:44px;color:var(--blue)}
+.loop .st.fail .ico{color:var(--red)}
+.loop-wrap{display:grid;grid-template-columns:1fr 640px;gap:40px;align-items:center;height:100%}
+
+/* ---------- process chain ---------- */
+.chain{display:flex;align-items:stretch;gap:0;margin:34px 0 44px}
+.link{flex:1;display:flex;flex-direction:column;gap:14px;align-items:flex-start;padding:26px 22px;border-radius:18px;background:var(--wash);position:relative;margin-right:26px}
+.link:last-child{margin-right:0}
+.link::after{content:"";position:absolute;right:-20px;top:50%;width:14px;height:14px;border-top:3px solid var(--ink-3);border-right:3px solid var(--ink-3);transform:translateY(-50%) rotate(45deg)}
+.link:last-child::after{display:none}
+.link .ico{font-size:40px;color:var(--blue)}
+.link b{font-size:30px;letter-spacing:-.01em}
+.link span{font-size:19px;color:var(--ink-2);line-height:1.35}
+.outputs{display:flex;gap:12px;flex-wrap:wrap;align-items:center;font-size:24px;color:var(--ink-2)}
+
+/* ---------- lego ---------- */
+.lego{display:grid;grid-template-columns:1fr 470px;grid-template-rows:minmax(0,1fr);gap:44px;flex:1;min-height:0;margin-top:6px}
+.bricks{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;align-content:start}
+.brick{position:relative;border:0;border-radius:10px;padding:30px 20px 18px;text-align:left;background:var(--bc);color:#fff;font-size:22px;font-weight:500;display:flex;gap:14px;align-items:center;transition:transform .25s var(--ease),opacity .25s,box-shadow .25s;box-shadow:inset 0 -6px 0 rgba(0,0,0,.18)}
+.brick::before{content:"";position:absolute;top:-10px;left:22px;width:120px;height:14px;background:radial-gradient(circle at 12px 7px,var(--bc) 10px,transparent 11px) 0 0/40px 14px repeat-x}
+.brick .ico{font-size:30px}
+.brick:hover{transform:translateY(-3px)}
+.brick.used{opacity:.25;transform:scale(.96)}
+.brick.dark{color:var(--ink)}
+.tray{border-radius:24px;background:var(--wash);padding:24px 28px;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.tray h3{margin:0 0 6px;font-size:26px}
+.tray .prob{font-size:22px;color:var(--ink-2);margin:0 0 18px;line-height:1.35}
+.stack{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:18px 10px;align-content:end;padding-top:10px}
+.stack .brick{padding:14px 12px 10px;font-size:16px;line-height:1.2;animation:drop .4s var(--ease);flex:none}
+.stack .brick .ico{font-size:22px}
+.stack .brick::before{top:-8px;height:10px;background:radial-gradient(circle at 10px 5px,var(--bc) 7px,transparent 8px) 0 0/32px 10px repeat-x}
+@keyframes drop{from{transform:translateY(-60px);opacity:0}}
+.stack .brick.good{outline:4px solid var(--green);outline-offset:2px}
+.stack .brick.bad{outline:4px solid var(--red);outline-offset:2px}
+.tray .res{font-size:20px;line-height:1.4;min-height:56px;margin-top:10px}
+
+/* ---------- calc vs ai ---------- */
+.versus{display:grid;grid-template-columns:1fr 1fr;gap:40px;flex:1;margin-top:4px}
+.panel{border-radius:24px;padding:32px;display:flex;flex-direction:column}
+.panel h3{font-size:36px;margin:0 0 6px;display:flex;gap:14px;align-items:center;letter-spacing:-.015em}
+.panel .how{font-size:22px;color:var(--ink-2);margin:0 0 22px}
+.calc-p{background:var(--wash)}
+.ai-p{background:var(--purple-10)}
+.ai-p h3 .ico{color:var(--purple)}
+.calc{display:grid;grid-template-columns:1fr 250px;gap:26px;align-items:start}
+.calc .disp{grid-column:1/-1;background:var(--ink);color:#fff;border-radius:14px;padding:18px 24px;font-size:48px;text-align:right;font-variant-numeric:tabular-nums;min-height:92px;overflow:hidden;white-space:nowrap}
+.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.keys button{border:0;border-radius:12px;background:var(--paper);font-size:28px;height:56px;font-weight:500;padding:0}
+.keys button.op{background:var(--blue-20)}
+.keys button.eqk{background:var(--blue);color:#fff}
+.calc .rule{font-size:22px;line-height:1.4;color:var(--ink-2)}
+.prompts{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.prompts .chip.on{background:var(--purple);border-color:var(--purple)}
+.ptext{font-size:30px;font-weight:500;min-height:44px;margin-bottom:18px;line-height:1.25}
+.bars{display:flex;flex-direction:column;gap:12px}
+.bar{display:grid;grid-template-columns:170px 1fr 70px;gap:14px;align-items:center;font-size:22px}
+.bar .track{height:30px;background:rgba(138,63,252,.12);border-radius:8px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--purple);border-radius:8px;transition:width 1s var(--ease)}
+.bar.top b{color:var(--purple)}
+.bar .pc{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.stamp{margin-top:20px;font-size:24px;line-height:1.35;padding:14px 18px;border-radius:12px;opacity:0;transform:scale(.96);transition:all .4s var(--ease)}
+.stamp.show{opacity:1;transform:none}
+.stamp.wrong{background:var(--red-10);color:var(--red);font-weight:500}
+.stamp.ok{background:var(--paper);color:var(--ink-2)}
+
+/* ---------- demo ---------- */
+.demo{position:relative;width:1344px;height:490px;margin-top:14px}
+.demo>svg{position:absolute;inset:0;width:1344px;height:490px}
+.demo .wire{stroke:var(--line);stroke-width:3;fill:none}
+.demo .flow{stroke:var(--purple);stroke-width:4;fill:none;stroke-dasharray:12 12;opacity:0}
+.demo.run .flow{opacity:1;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-24}}
+.src{position:absolute;left:0;width:290px;height:78px;border-radius:16px;background:var(--wash);display:flex;gap:16px;align-items:center;padding:0 22px;font-size:24px;font-weight:500;transition:all .4s}
+.src .ico{font-size:32px;color:var(--ink-2)}
+.src.lit{background:var(--purple-10)}
+.src.lit .ico{color:var(--purple)}
+.brain{position:absolute;left:500px;top:150px;width:300px;height:180px;border-radius:24px;background:var(--ink);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;font-size:26px;font-weight:600}
+.brain .ico{font-size:52px;color:#c5a4ff}
+.demo.run .brain{animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 18px rgba(138,63,252,.15)}}
+.chat{position:absolute;left:880px;top:10px;width:464px;display:flex;flex-direction:column;gap:14px}
+.bub{border-radius:18px;padding:18px 22px;font-size:22px;line-height:1.4}
+.bub.q{background:var(--blue);color:#fff;align-self:flex-end;border-bottom-right-radius:6px}
+.bub.a{background:var(--wash);border-bottom-left-radius:6px;min-height:60px;white-space:pre-wrap}
+.bub.a:empty{display:none}
+
+/* ---------- skills ---------- */
+.skills{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;margin-top:22px}
+.skill{border-radius:20px;background:var(--wash);padding:30px 24px;min-height:300px;display:flex;flex-direction:column;gap:14px}
+.skill .ico{font-size:48px;color:var(--blue)}
+.skill b{font-size:30px;letter-spacing:-.01em}
+.skill span{font-size:21px;line-height:1.38;color:var(--ink-2)}
+.closer{margin-top:44px;font-size:40px;font-weight:500;letter-spacing:-.015em;max-width:1200px;line-height:1.2}
+
+/* ---------- pathways ---------- */
+.paths{position:relative;width:1344px;height:520px;margin-top:10px}
+.paths>svg{position:absolute;inset:0;width:1344px;height:520px;overflow:visible}
+.paths .e{stroke:var(--line);stroke-width:4;fill:none;transition:stroke .3s,stroke-width .3s}
+.paths .e.on{stroke:var(--blue);stroke-width:6}
+.pnode{position:absolute;transform:translate(-50%,-50%);border:2px solid var(--line);background:var(--paper);border-radius:14px;padding:14px 22px;font-size:23px;font-weight:500;white-space:nowrap;transition:all .3s}
+.pnode:hover{border-color:var(--ink)}
+.pnode.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.pnode.end{font-size:26px;font-weight:600;padding:20px 26px}
+.path-bar{display:flex;gap:16px;align-items:center;font-size:21px;color:var(--ink-2)}
+
+/* ---------- day ---------- */
+.day{position:relative;margin-top:60px}
+.day .rail{position:absolute;left:40px;right:40px;top:58px;height:4px;background:var(--line);border-radius:2px}
+.day .rail i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--blue);border-radius:2px;transition:width .6s var(--ease)}
+.stops{display:grid;grid-template-columns:repeat(8,1fr);gap:12px;position:relative}
+.stop{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px}
+.stop .circ{width:120px;height:120px;border-radius:50%;background:var(--paper);border:3px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--ink);transition:all .4s}
+.stop.shown .circ{border-color:var(--blue);color:var(--blue)}
+.stop.bug.shown .circ{border-color:var(--red);color:var(--red);background:var(--red-10);animation:shake .6s .2s}
+@keyframes shake{20%,60%{transform:translateX(-8px) rotate(-4deg)}40%,80%{transform:translateX(8px) rotate(4deg)}}
+.stop .tm{font-size:26px;font-weight:600;font-variant-numeric:tabular-nums}
+.stop .what{font-size:20px;line-height:1.3;color:var(--ink-2);max-width:170px}
+.day-end{margin-top:64px;font-size:34px;text-align:center}
+
+/* ---------- hardware stack ---------- */
+.stackd{display:flex;flex-direction:column;gap:12px;margin-top:24px;max-width:1344px}
+.layer{display:grid;grid-template-columns:80px 260px 1fr;align-items:center;gap:24px;border-radius:18px;padding:16px 30px;font-size:24px}
+.layer .ico{font-size:48px}
+.layer b{font-size:36px;letter-spacing:-.015em}
+.layer span{color:var(--ink-2);line-height:1.35}
+.layer.ai{background:var(--purple-10)} .layer.ai .ico,.layer.ai b{color:var(--purple)}
+.layer.sw{background:var(--blue-10)} .layer.sw .ico,.layer.sw b{color:var(--blue)}
+.layer.hw{background:var(--teal-10)} .layer.hw .ico,.layer.hw b{color:var(--teal)}
+.chips-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.chips-row .chip-lg{font-size:20px;padding:10px 18px}
+.chip-lg{display:inline-flex;gap:12px;align-items:center;border-radius:999px;padding:14px 24px;font-size:24px;background:var(--wash);font-weight:500}
+.chip-lg .ico{font-size:28px;color:var(--teal)}
+
+/* ---------- hw skills ---------- */
+.grid7{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:22px}
+.tile{border-radius:20px;background:var(--wash);padding:30px 26px;display:flex;flex-direction:column;gap:18px;min-height:190px}
+.tile .ico{font-size:46px;color:var(--teal)}
+.tile b{font-size:30px}
+
+/* ---------- quote ---------- */
+.quote{font-family:var(--serif);font-style:italic;font-size:76px;line-height:1.14;letter-spacing:-.01em;max-width:1250px;margin:0}
+.quote-by{margin-top:40px;font-size:26px;color:var(--ink-2);display:flex;gap:14px;align-items:center}
+
+/* ---------- Q&A ---------- */
+.qa{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;flex:1;margin-top:8px;min-height:0}
+.col{border-radius:24px;padding:28px;display:flex;flex-direction:column;gap:14px;min-height:0;overflow:auto}
+.col h3{font-size:54px;margin:0 0 8px;letter-spacing:-.03em;display:flex;gap:16px;align-items:center}
+.col.ai{background:var(--purple-10)} .col.ai h3{color:var(--purple)}
+.col.sw{background:var(--blue-10)} .col.sw h3{color:var(--blue)}
+.col.hw{background:var(--teal-10)} .col.hw h3{color:var(--teal)}
+.qchip{border:0;background:var(--paper);border-radius:14px;padding:16px 18px;text-align:left;font-size:21px;line-height:1.35;transition:all .2s;display:flex;gap:12px;align-items:flex-start}
+.qchip:hover{transform:translateX(4px)}
+.qchip.done{opacity:.4;text-decoration:line-through}
+.qchip .ico{margin-top:4px;color:var(--ink-3)}
+.qa-add{display:flex;gap:12px;margin-top:18px;align-items:center}
+.qa-add input{font:inherit;font-size:20px;padding:12px 16px;border:2px solid var(--line);border-radius:12px;flex:1}
+.qa-add select{font:inherit;font-size:20px;padding:12px;border:2px solid var(--line);border-radius:12px;background:#fff}
+.spot{position:absolute;inset:0;background:rgba(255,255,255,.97);z-index:20;display:flex;flex-direction:column;justify-content:center;padding:0 160px;opacity:0;visibility:hidden;transition:all .35s var(--ease)}
+.spot.open{opacity:1;visibility:visible}
+.spot .scat{font-size:30px;font-weight:600;margin-bottom:28px;display:flex;gap:14px;align-items:center}
+.spot .qq{font-size:82px;font-weight:600;letter-spacing:-.03em;line-height:1.06;max-width:1250px}
+.spot .hint{margin-top:48px;font-size:22px;color:var(--ink-3)}
+
+/* ---------- who would you ask ---------- */
+.scen-tabs{display:flex;gap:12px;margin-bottom:22px}
+.scen{font-size:50px;font-weight:600;letter-spacing:-.025em;line-height:1.1;margin:0 0 30px;max-width:1300px;min-height:112px}
+.who-grid .opt{min-height:200px}
+.who-grid .opt .ico{font-size:44px}
+.breakdown{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:28px;opacity:0;transform:translateY(10px);transition:all .5s var(--ease)}
+.revealed ~ .breakdown{opacity:1;transform:none}
+.breakdown div{border-left:4px solid var(--c);padding:4px 0 4px 18px;font-size:22px;line-height:1.4}
+.breakdown b{display:block;font-size:24px;color:var(--c);margin-bottom:4px}
+
+/* ---------- skillsbuild ---------- */
+.ladder{display:flex;align-items:center;gap:36px;margin-top:60px}
+.rung{font-size:80px;font-weight:600;letter-spacing:-.035em;color:var(--ink-3)}
+.rung.shown{color:var(--ink)}
+.rung:last-of-type.shown{color:var(--purple)}
+.ladder .ico{font-size:56px;color:var(--ink-3)}
+.cats{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:22px}
+.cat{border:2px solid var(--line);background:var(--paper);border-radius:20px;padding:30px;text-align:left;display:flex;gap:22px;align-items:center;font-size:32px;font-weight:600;transition:all .25s}
+.cat .ico{font-size:50px;color:var(--purple)}
+.cat:hover{border-color:var(--ink)}
+.cat.on{background:var(--purple);border-color:var(--purple);color:#fff}
+.cat.on .ico{color:#fff}
+.hands{display:grid;grid-template-columns:1fr 520px;gap:56px;flex:1;align-items:center}
+.steps5{display:flex;flex-direction:column;gap:12px;counter-reset:s}
+.steps5 li{list-style:none;display:flex;gap:22px;align-items:center;font-size:30px;padding:18px 22px;border-radius:16px;background:var(--wash);cursor:pointer;transition:all .25s}
+.steps5 li::before{counter-increment:s;content:counter(s);width:48px;height:48px;border-radius:50%;background:var(--paper);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:600;flex:none}
+.steps5 li.done{background:var(--purple-10);color:var(--purple)}
+.steps5 li.done::before{background:var(--purple);color:#fff}
+.steps5{padding:0;margin:0}
+.timer{border-radius:28px;background:var(--ink);color:#fff;padding:40px;display:flex;flex-direction:column;align-items:center;gap:22px}
+.timer .clock{font-size:150px;font-weight:600;letter-spacing:-.04em;font-variant-numeric:tabular-nums;line-height:1}
+.timer .lbl{font-size:22px;color:#c6c6c6}
+.timer .ctl{display:flex;gap:12px}
+.timer .btn{background:#393939}
+.timer .btn.go{background:var(--purple)}
+.timer.low .clock{color:#ffb3b8}
+.timer.done{animation:pulse 1.2s infinite}
+.tbar{width:100%;height:8px;background:#393939;border-radius:4px;overflow:hidden}
+.tbar i{display:block;height:100%;background:var(--purple);width:100%;transition:width 1s linear}
+
+/* mission */
+.mission{display:grid;grid-template-columns:1fr 1fr;gap:44px;margin-top:6px}
+.mission h3{font-size:30px;margin:0 0 16px;display:flex;gap:12px;align-items:center}
+.mission h3 .ico{color:var(--purple)}
+.pick{display:flex;flex-wrap:wrap;gap:10px}
+.pick .chip{font-size:22px}
+.pick .chip.on{background:var(--purple);border-color:var(--purple)}
+.pick input{font:inherit;font-size:20px;padding:10px 16px;border:1.5px dashed var(--ink-3);border-radius:999px;width:220px}
+.pledge{margin-top:44px;border-radius:24px;background:var(--wash);padding:34px 40px;font-size:46px;font-weight:500;letter-spacing:-.02em;line-height:1.2}
+.pledge em{font-style:normal;color:var(--purple);border-bottom:3px solid var(--purple-20)}
+
+/* agent designer */
+.agent{display:grid;grid-template-columns:1fr 520px;gap:48px;flex:1;min-height:0}
+.qs{display:flex;flex-direction:column;gap:10px}
+.qs label{display:grid;grid-template-columns:44px 1fr;gap:6px 16px;align-items:center;font-size:24px;font-weight:500}
+.qs label i.n{font-style:normal;width:44px;height:44px;border-radius:50%;background:var(--purple-10);color:var(--purple);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:20px}
+.qs input{grid-column:2;font:inherit;font-size:20px;padding:10px 16px;border:2px solid var(--line);border-radius:12px}
+.card-agent{border-radius:28px;background:var(--ink);color:#fff;padding:36px;display:flex;flex-direction:column;gap:18px}
+.card-agent .hd{display:flex;gap:16px;align-items:center}
+.card-agent .av{width:70px;height:70px;border-radius:20px;background:var(--purple);display:flex;align-items:center;justify-content:center;font-size:38px}
+.card-agent .nm{font-size:34px;font-weight:600;border:0;background:none;color:#fff;font-family:inherit;width:100%;padding:0}
+.card-agent .row{font-size:19px;line-height:1.4}
+.card-agent .row b{display:block;font-size:15px;color:#a8a8a8;font-weight:500;margin-bottom:2px}
+.card-agent .row.no{color:#ffb3b8}
+
+/* wrap */
+.lines{display:flex;flex-direction:column;gap:18px;margin-top:10px}
+.lines p{font-size:84px;font-weight:600;letter-spacing:-.035em;line-height:1;margin:0}
+.lines p:last-child{color:var(--blue)}
+.eq{display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-top:44px}
+.eq .term{display:flex;flex-direction:column;align-items:center;gap:16px;font-size:44px;font-weight:600;letter-spacing:-.02em}
+.eq .term .ico{font-size:80px;color:var(--blue)}
+.eq .plus{font-size:64px;color:var(--ink-3);font-weight:300}
+.lbs{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:40px}
+.lb{border-radius:24px;padding:40px;background:var(--wash);display:flex;flex-direction:column;gap:20px;min-height:320px}
+.lb .ico{font-size:64px}
+.lb b{font-size:48px;letter-spacing:-.025em}
+.lb span{font-size:24px;color:var(--ink-2);line-height:1.4}
+.lb:nth-child(1) .ico{color:var(--blue)} .lb:nth-child(2) .ico{color:var(--purple)} .lb:nth-child(3) .ico{color:var(--teal)}
+
+.final .display{font-size:150px}
+.final-thread{display:flex;gap:26px;align-items:center;font-size:38px;font-weight:500;margin-top:44px;color:var(--ink-2);flex-wrap:wrap;justify-content:center}
+.final-thread .ico{color:var(--ink-3);font-size:32px}
+.final-thread span:last-child{color:var(--blue);font-weight:600}
+
+/* ---------- window chrome (outside stage) ---------- */
+#dock{position:fixed;right:18px;bottom:18px;display:flex;gap:8px;z-index:50;opacity:.25;transition:opacity .3s}
+#dock:hover,body.idle-off #dock{opacity:1}
+#dock button{width:46px;height:46px;border-radius:12px;border:0;background:rgba(255,255,255,.92);box-shadow:0 2px 10px rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;font-size:20px}
+#dock button.on{background:var(--blue);color:#fff}
+#notes{position:fixed;left:18px;right:18px;bottom:76px;max-height:40vh;overflow:auto;background:#fff;border-radius:18px;box-shadow:0 10px 40px rgba(0,0,0,.2);padding:24px 30px;z-index:49;font-size:18px;line-height:1.55;display:none}
+body.notes-open #notes{display:block}
+#notes h4{margin:0 0 8px;font-size:14px;color:var(--ink-3);font-weight:500}
+#notes .nx{margin-top:14px;font-size:14px;color:var(--ink-3)}
+#grid{position:fixed;inset:0;background:rgba(244,244,244,.98);z-index:60;overflow:auto;padding:40px;display:none}
+body.grid-open #grid{display:block}
+#grid .g{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;max-width:1500px;margin:0 auto}
+#grid button{border:0;background:#fff;border-radius:14px;padding:16px;text-align:left;min-height:110px;display:flex;flex-direction:column;gap:8px;border-top:4px solid var(--c)}
+#grid button.cur{outline:3px solid var(--blue)}
+#grid small{color:var(--ink-3);font-size:13px}
+#grid span{font-size:16px;font-weight:500;line-height:1.3}
+#grid h2{max-width:1500px;margin:0 auto 20px;font-size:22px}
+#toast{position:fixed;left:50%;top:18px;transform:translate(-50%,-80px);background:var(--ink);color:#fff;padding:14px 22px;border-radius:12px;font-size:16px;z-index:70;transition:transform .35s var(--ease);max-width:90vw}
+#toast.show{transform:translate(-50%,0)}
+#editbar{position:fixed;left:18px;bottom:18px;z-index:55;display:none;gap:8px}
+body.editing #editbar{display:flex}
+#editbar button{border:0;border-radius:12px;padding:12px 18px;background:var(--blue);color:#fff;font-size:15px;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+#editbar button.sec{background:#fff;color:var(--ink)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="chrome-top"><div class="brand"><b></b>Victoria School × IBM</div><div class="where"><span class="n"></span><span class="t"></span></div></div>
+
+<!-- ============ 1. HERO ============ -->
+<section class="slide hero" data-sec="ibm" data-title="Curiosity → Skills → Careers">
+  <canvas id="dots" width="1600" height="900"></canvas>
+  <div class="hero-inner">
+    <div class="thread">
+      <span class="w">Curiosity</span>
+      <svg viewBox="0 0 120 60"><path d="M4 30 C 40 4, 80 56, 112 30 M100 20 L112 30 L100 40"/></svg>
+      <span class="w">Skills</span>
+      <svg viewBox="0 0 120 60"><path d="M4 30 C 40 56, 80 4, 112 30 M100 20 L112 30 L100 40"/></svg>
+      <span class="w">Careers</span>
+    </div>
+    <p class="hero-sub">A morning with the people who build software, AI and hardware at IBM — and how you can start building too.</p>
+    <div class="hero-meta"><span><i data-i="school"></i>Secondary 3, Victoria School</span><span><i data-i="clock-9"></i>9:00 to 12:00</span></div>
+  </div>
+  <aside class="notes">Let the title animate in. Welcome everyone. "Today is one connected story: what IBM does, what a software and AI career looks like, what a hardware career looks like, how they fit together — and how you can start learning yourself." Keys: → / Space next, ← back, N notes, P presenter window, G all slides, F full screen, E edit text and photos.</aside>
+</section>
+
+<!-- ============ 2. AGENDA ============ -->
+<section class="slide" data-sec="ibm" data-title="Today's story">
+  <h2 class="title">Today's story</h2>
+  <div class="agenda" id="agenda"></div>
+  <aside class="notes">Walk through the morning in one breath. Click any row to jump to that part during the session.</aside>
+</section>
+
+<!-- ============ 3. IBM word cloud ============ -->
+<section class="slide" data-sec="ibm" data-title="When you hear IBM…">
+  <h2 class="title">When you hear the word IBM, what's the first thing that comes to mind?</h2>
+  <div class="cloud-box" id="cloud"><div class="empty">Shout it out</div></div>
+  <div class="cloud-controls">
+    <input id="cloud-in" placeholder="Type an answer, press Enter" aria-label="Add an answer">
+    <button class="chip" data-add="Computers">Computers</button>
+    <button class="chip" data-add="AI">AI</button>
+    <button class="chip" data-add="Watson">Watson</button>
+    <button class="chip" data-add="Mainframes">Mainframes</button>
+    <button class="chip" data-add="No idea">No idea</button>
+    <button class="chip" id="cloud-clear"><i data-i="rotate-ccw"></i></button>
+  </div>
+  <aside class="notes">Let students shout. Type each answer (repeats grow bigger), or tap the quick chips. Then: "Some of you think computers. Some think AI. Some have no idea. That's actually okay. By the end of today, I want you to have a better idea of what people at IBM actually build — and what you might be able to build in the future."</aside>
+</section>
+
+<!-- ============ 4. Quiz: how long ============ -->
+<section class="slide" data-sec="ibm" data-title="Quiz: how long has IBM been around?">
+  <h2 class="title">How long has IBM been around?</h2>
+  <p class="cards-hint"><i data-i="hand"></i>Hold up your A, B, C or D card</p>
+  <div class="quiz" data-quiz>
+    <button class="opt"><span class="k">A</span><span class="v">25 years</span></button>
+    <button class="opt"><span class="k">B</span><span class="v">50 years</span></button>
+    <button class="opt" data-correct><span class="k">C</span><span class="v">100+ years</span></button>
+    <button class="opt"><span class="k">D</span><span class="v">200+ years</span></button>
+  </div>
+  <div class="quiz-bar"><button class="btn" data-reveal><i data-i="eye"></i>Reveal</button><p class="after">IBM started in 1911. What it builds today looks nothing like what it built back then. <b>Technology changes, and companies have to change with it.</b></p></div>
+  <aside class="notes">Let them vote with cards. Press R or click Reveal. "IBM has been around for more than a century, but the technology IBM works on today is very different from decades ago." Plant the idea: technology changes, companies change with it — careers too.</aside>
+</section>
+
+<!-- ============ 5. IBM or NOT IBM ============ -->
+<section class="slide" data-sec="ibm" data-title="IBM or NOT IBM?">
+  <h2 class="title" style="margin-bottom:14px">IBM or not IBM?</h2>
+  <div class="legend"><span><b style="background:var(--blue);color:#fff">IBM</b>thumbs up</span><span><b style="border:2px solid var(--ink)">Not IBM</b>thumbs down</span><span class="muted">Tap a card to flip it</span></div>
+  <div class="flip-grid" id="flips"></div>
+  <aside class="notes">Show each card, students vote thumbs up (IBM) or down (not IBM), then flip. Twist cards: the first smartphone (IBM Simon, 1994) and the floppy disk (why the save icon looks like that). Mainframes are also IBM (System/360, 1964) if you want a bonus. Takeaway: "IBM isn't just one technology. IBM has changed what it does many times." Bridge: "And careers can change in a similar way."</aside>
+</section>
+
+<!-- ============ 6. Quiz: IBM today ============ -->
+<section class="slide" data-sec="ibm" data-title="Quiz: what does IBM do today?">
+  <h2 class="title">What do you think IBM does today?</h2>
+  <p class="cards-hint"><i data-i="hand"></i>Hold up your card</p>
+  <div class="quiz" data-quiz>
+    <button class="opt"><span class="k">A</span><span class="v">Makes laptops</span></button>
+    <button class="opt" data-correct><span class="k">B</span><span class="v">Builds AI</span></button>
+    <button class="opt" data-correct><span class="k">C</span><span class="v">Helps companies solve technology problems</span></button>
+    <button class="opt"><span class="k">D</span><span class="v">All of the above</span></button>
+  </div>
+  <div class="quiz-bar"><button class="btn" data-reveal><i data-i="eye"></i>Reveal</button><p class="after">Trick question. IBM <i>used</i> to make laptops — the ThinkPad — but sold that business to Lenovo in 2005. <b>Companies reinvent themselves.</b></p></div>
+  <aside class="notes">Most will pick D. Reveal B and C. The ThinkPad twist is a live example of "technology changes, companies change with it". Then move to the three areas.</aside>
+</section>
+
+<!-- ============ 7. Three areas ============ -->
+<section class="slide" data-sec="ibm" data-title="IBM today: three areas">
+  <h2 class="title">IBM today, in three simple ideas</h2>
+  <div class="pillars">
+    <div class="pillar" style="--c:var(--purple)" data-step="1"><i data-i="sparkles"></i><h3>AI</h3><p>Building AI systems and helping organisations use AI well.</p></div>
+    <div class="pillar" style="--c:var(--blue)" data-step="2"><i data-i="cloud"></i><h3>Hybrid cloud</h3><p>Helping organisations run and connect all their technology.</p></div>
+    <div class="pillar" style="--c:var(--teal)" data-step="3"><i data-i="lightbulb"></i><h3>Consulting</h3><p>Solving real business problems using technology.</p></div>
+  </div>
+  <p class="lede say" style="margin-top:64px;font-size:40px;color:var(--ink)" data-step="4">"And that's where people like me come in."</p>
+  <aside class="notes">Reveal one at a time. Keep each to one sentence. End with "And that's where people like me come in." — hand over to Conner.</aside>
+</section>
+
+<!-- ============ 8. Divider Conner ============ -->
+<section class="slide divider" data-sec="conner" data-title="Conner: IBM → Software → AI">
+  <div class="story" data-story></div>
+  <p class="div-time">9:30</p>
+  <h2 class="div-title">From IBM employee to software developer to AI builder</h2>
+  <p class="div-speaker"><i data-i="user-round"></i>Conner Pang</p>
+  <aside class="notes">The story bar at the top shows where we are in the morning. Conner's part: a personal, non-linear career story.</aside>
+</section>
+
+<!-- ============ 9. Did I always know ============ -->
+<section class="slide" data-sec="conner" data-title="Did I always know?">
+  <div class="split">
+    <button class="photo" data-photo="conner"><span class="ph"><i data-i="image-plus"></i>Add a photo of you</span></button>
+    <div>
+      <h2 class="title">Do you think I always knew I wanted to become a software developer?</h2>
+      <div class="big-no" data-step="1">No.</div>
+      <p class="lede" style="margin-top:36px" data-step="2">My career wasn't a straight line. If you don't know exactly what you want to be at Secondary 3, that's normal.</p>
+    </div>
+  </div>
+  <aside class="notes">Show your photo (press E, then click the photo box to add one). Ask the question. Pause. Let them guess. Then → "No." Then: "My career wasn't a straight line."</aside>
+</section>
+
+<!-- ============ 10. Journey ============ -->
+<section class="slide" data-sec="conner" data-title="My journey in four stages">
+  <h2 class="title" style="margin-bottom:0">My journey, in four stages</h2>
+  <div class="journey" id="journey">
+    <svg viewBox="0 0 1344 240">
+      <path class="base" d="M168 170 C 320 170, 360 70, 504 70 S 700 190, 840 190 S 1040 60, 1176 60"/>
+      <path class="ink" d="M168 170 C 320 170, 360 70, 504 70 S 700 190, 840 190 S 1040 60, 1176 60"/>
+      <circle class="node" cx="168" cy="170" r="16"/><circle class="node" cx="504" cy="70" r="16"/><circle class="node" cx="840" cy="190" r="16"/><circle class="node" cx="1176" cy="60" r="16"/>
+      <circle class="dot" r="11" cx="168" cy="170"/>
+    </svg>
+    <div class="stages">
+      <div class="stage" data-step="1"><h3><small>1</small>School</h3><p data-edit="j1a" data-placeholder>What I was into at 15, and what I thought I'd do.</p><p data-edit="j1b" data-placeholder>What I didn't know yet.</p></div>
+      <div class="stage" data-step="2"><h3><small>2</small>Joined IBM</h3><p>I joined IBM — but I didn't start as a software developer.</p><p data-edit="j2" data-placeholder>My first role: …</p></div>
+      <div class="stage" data-step="3"><h3><small>3</small>Changing direction</h3><p>I learned to code later, one small project at a time.</p><p data-edit="j3" data-placeholder>The moment it clicked: …</p></div>
+      <div class="stage" data-step="4"><h3><small>4</small>Today</h3><div class="tags"><span class="tag">Software</span><span class="tag p">AI</span><span class="tag p">Generative AI</span><span class="tag p">AI agents</span><span class="tag">Cloud</span><span class="tag t">Real business problems</span></div></div>
+    </div>
+  </div>
+  <aside class="notes">Press → to travel stage by stage. The path is deliberately wiggly — careers aren't straight lines. Stage 1: keep it off grades. "You don't need your entire career planned at 15." Stage 2: "I joined IBM — but I didn't immediately become a software developer." Stage 3: learned coding later. Stage 4: what you do today. Blue-underlined text is placeholder — press E to write your own.</aside>
+</section>
+
+<!-- ============ 11. Loop ============ -->
+<section class="slide" data-sec="conner" data-title="Learn → Build → Fail → Try again">
+  <div class="loop-wrap">
+    <div>
+      <h2 class="title">How I actually learned</h2>
+      <p class="lede">Not in one go. Round and round this loop, many times.</p>
+      <p class="lede" style="margin-top:36px;color:var(--ink);font-weight:500">Careers can change as you discover new interests and skills.</p>
+    </div>
+    <div class="loop">
+      <svg viewBox="0 0 640 640"><circle class="ring" cx="320" cy="320" r="230"/><circle class="arc" cx="320" cy="320" r="230" stroke-dasharray="180 1265"/></svg>
+      <div class="st" style="left:210px;top:30px"><i data-i="book-open"></i>Learn</div>
+      <div class="st" style="left:420px;top:250px"><i data-i="hammer"></i>Build</div>
+      <div class="st fail" style="left:210px;top:470px"><i data-i="circle-x"></i>Fail</div>
+      <div class="st" style="left:0;top:250px"><i data-i="rotate-ccw"></i>Try again</div>
+    </div>
+  </div>
+  <aside class="notes">Tell one real failure story here — something you built that broke, and what you learned from it. Keep it short and a bit funny.</aside>
+</section>
+
+<!-- ============ 12. What devs do ============ -->
+<section class="slide" data-sec="conner" data-title="Developers solve problems">
+  <h2 class="title">Software developers solve problems using technology</h2>
+  <div class="chain">
+    <div class="link" data-step="1"><i data-i="circle-help"></i><b>Problem</b><span>What's actually going wrong?</span></div>
+    <div class="link" data-step="2"><i data-i="lightbulb"></i><b>Ideas</b><span>Lots of ways to fix it</span></div>
+    <div class="link" data-step="3"><i data-i="hammer"></i><b>Build</b><span>Make a first version</span></div>
+    <div class="link" data-step="4"><i data-i="flask-conical"></i><b>Test</b><span>Does it work?</span></div>
+    <div class="link" data-step="5"><i data-i="wrench"></i><b>Fix</b><span>It usually doesn't — yet</span></div>
+    <div class="link" data-step="6"><i data-i="trending-up"></i><b>Improve</b><span>Make it better for users</span></div>
+  </div>
+  <div class="outputs" data-step="7">The result could be:
+    <span class="chip-lg"><i data-i="smartphone"></i>An app</span><span class="chip-lg"><i data-i="globe"></i>A website</span><span class="chip-lg"><i data-i="bot"></i>An AI assistant</span><span class="chip-lg"><i data-i="workflow"></i>An automation</span><span class="chip-lg"><i data-i="users"></i>A tool used by thousands</span>
+  </div>
+  <aside class="notes">"Not just someone who writes code." Step through the chain. Code is only one step — most of the job is understanding the problem and fixing what doesn't work.</aside>
+</section>
+
+<!-- ============ 13. LEGO ============ -->
+<section class="slide" data-sec="conner" data-title="The LEGO game">
+  <h2 class="title" style="margin-bottom:18px">Think like a LEGO builder</h2>
+  <div class="lego">
+    <div>
+      <p class="lede" style="margin-bottom:26px;font-size:26px">Which blocks do we need? Tap the ones the class chooses.</p>
+      <div class="bricks" id="bricks"></div>
+    </div>
+    <div class="tray">
+      <h3>The problem</h3>
+      <p class="prob">"I keep missing my bus after school. Build me an app that helps."</p>
+      <div class="stack" id="stack"></div>
+      <div class="res" id="lego-res"></div>
+      <div style="display:flex;gap:10px;margin-top:10px"><button class="btn blue" id="lego-check"><i data-i="check"></i>Check our build</button><button class="btn ghost" id="lego-reset"><i data-i="rotate-ccw"></i></button></div>
+    </div>
+  </div>
+  <aside class="notes">Ask the class which blocks the bus app needs; tap them into the build. Some are decoys (camera filter, music, 3D game engine). Hit Check. Message: "The important skill isn't knowing every LEGO piece. It's knowing how to solve the problem and figure out which pieces you need."</aside>
+</section>
+
+<!-- ============ 14. Calculator vs AI ============ -->
+<section class="slide" data-sec="conner" data-title="Calculator vs AI">
+  <h2 class="title" style="margin-bottom:22px;font-size:56px">What's the difference between a calculator and AI?</h2>
+  <div class="versus">
+    <div class="panel calc-p">
+      <h3><i data-i="calculator"></i>Calculator</h3>
+      <p class="how">You give it the rules.</p>
+      <div class="calc">
+        <div class="disp" id="disp">2+2</div>
+        <div class="keys" id="keys"></div>
+        <p class="rule">Same question, same answer. Every single time.</p>
+      </div>
+    </div>
+    <div class="panel ai-p">
+      <h3><i data-i="sparkles"></i>AI</h3>
+      <p class="how">It learns patterns from lots of examples, then guesses what comes next.</p>
+      <div class="prompts" id="prompts"></div>
+      <div class="ptext" id="ptext">Pick a sentence for the AI to finish.</div>
+      <div class="bars" id="bars"></div>
+      <div class="stamp" id="stamp"></div>
+    </div>
+  </div>
+  <aside class="notes">Let a student press 2 + 2 = on the calculator. Then on the AI side, click each sentence. Save "strawberry" for last: the AI picks the most likely-sounding answer, not a checked one — and gets it wrong. Ask: "Does AI know everything?" → "No. AI can be very powerful, but it can also be wrong." (The percentages are an illustration, not a real model.)</aside>
+</section>
+
+<!-- ============ 15. AI is a tool ============ -->
+<section class="slide center" data-sec="conner" data-title="AI is a tool">
+  <p class="lede" style="font-size:40px;margin-bottom:34px">Does AI know everything?</p>
+  <p class="display" data-step="1">No.</p>
+  <p class="lede" style="margin-top:48px;font-size:38px;color:var(--ink);max-width:1100px" data-step="2">AI is a tool. Knowing how to use it responsibly is part of being good at technology.</p>
+  <aside class="notes">One of the key messages of the day. Say it slowly.</aside>
+</section>
+
+<!-- ============ 16. Real work demo ============ -->
+<section class="slide" data-sec="conner" data-title="What I build: finding the right part">
+  <h2 class="title" style="margin-bottom:8px;font-size:56px">Something a developer can build with AI</h2>
+  <p class="lede" style="font-size:26px">Imagine you work in a huge company. Someone asks: can we find the right part for this machine?</p>
+  <div class="demo" id="demo">
+    <svg viewBox="0 0 1344 490" aria-hidden="true"></svg>
+    <div class="brain"><i data-i="bot"></i>AI assistant</div>
+    <div class="chat"><div class="bub q">Which seal fits pump P-220 at the Jurong plant?</div><div class="bub a" id="ans"></div>
+      <button class="btn" id="ask" style="align-self:flex-start"><i data-i="play"></i>Ask the assistant</button></div>
+  </div>
+  <aside class="notes">The answer is scattered across databases, documents, spreadsheets, past cases and business systems. Click Ask to show the idea, then switch to your live demo if you have one. Principle: not "look how clever AI is" but "this is something a software developer can build using AI." "I build software and AI systems that help people find and understand this information." (Part numbers here are made up for illustration.)</aside>
+</section>
+
+<!-- ============ 17. Five skills ============ -->
+<section class="slide" data-sec="conner" data-title="Five skills">
+  <h2 class="title">What skills does an AI or software developer need?</h2>
+  <div class="skills">
+    <div class="skill" data-step="1"><i data-i="puzzle"></i><b>Problem solving</b><span>Can you break a big problem into small ones?</span></div>
+    <div class="skill" data-step="2"><i data-i="code-xml"></i><b>Technology</b><span>Coding, AI, databases, cloud</span></div>
+    <div class="skill" data-step="3"><i data-i="telescope"></i><b>Curiosity</b><span>Asking "why?" and "what if?"</span></div>
+    <div class="skill" data-step="4"><i data-i="users"></i><b>Teamwork</b><span>Real software is built by teams</span></div>
+    <div class="skill" data-step="5"><i data-i="refresh-cw"></i><b>Learning</b><span>Technology changes constantly</span></div>
+  </div>
+  <p class="closer" data-step="6">You don't need all five today. The goal is to become someone who knows how to learn.</p>
+  <aside class="notes">Quick show of hands after each: "Who thinks they're already good at this one?" Then: "You don't need to be an expert in all five today. The goal at Secondary 3 isn't to become an AI engineer. The goal is to start becoming someone who knows how to learn."</aside>
+</section>
+
+<!-- ============ 18. Pathways ============ -->
+<section class="slide" data-sec="conner" data-title="Many routes into tech">
+  <h2 class="title" style="margin-bottom:6px">There isn't only one route into technology</h2>
+  <div class="paths" id="paths"><svg viewBox="0 0 1344 520"></svg></div>
+  <div class="path-bar"><i data-i="mouse-pointer-click"></i>Tap the stops to draw a route<button class="btn ghost" id="paths-reset" style="margin-left:12px;padding:10px 18px;font-size:18px"><i data-i="rotate-ccw"></i>Clear</button></div>
+  <aside class="notes">Tap stops to draw your own route live ("My own journey wasn't perfectly straight either"). Then clear it and ask a student to pick a different route — show that many roads lead to the same place, including loops between work and further learning.</aside>
+</section>
+
+<!-- ============ 19. Day in the life ============ -->
+<section class="slide" data-sec="conner" data-title="A day in my life">
+  <h2 class="title">A day in my life</h2>
+  <div class="day" id="day">
+    <div class="rail"><i></i></div>
+    <div class="stops">
+      <div class="stop" data-step="1"><div class="circ"><i data-i="coffee"></i></div><div class="tm">9:00</div><div class="what">Messages and meetings</div></div>
+      <div class="stop" data-step="2"><div class="circ"><i data-i="messages-square"></i></div><div class="tm">10:00</div><div class="what">Talk to users</div></div>
+      <div class="stop" data-step="3"><div class="circ"><i data-i="laptop"></i></div><div class="tm">11:00</div><div class="what">Build software</div></div>
+      <div class="stop" data-step="4"><div class="circ"><i data-i="soup"></i></div><div class="tm">12:00</div><div class="what">Lunch</div></div>
+      <div class="stop" data-step="5"><div class="circ"><i data-i="bot"></i></div><div class="tm">1:00</div><div class="what">Experiment with AI</div></div>
+      <div class="stop bug" data-step="6"><div class="circ"><i data-i="bug"></i></div><div class="tm">3:00</div><div class="what">Something breaks</div></div>
+      <div class="stop" data-step="7"><div class="circ"><i data-i="search"></i></div><div class="tm">3:30</div><div class="what">Debug it</div></div>
+      <div class="stop" data-step="8"><div class="circ"><i data-i="rocket"></i></div><div class="tm">5:00</div><div class="what">Demo what I built</div></div>
+    </div>
+    <p class="day-end say" data-step="9">And yes — sometimes the computer decides not to cooperate.</p>
+  </div>
+  <aside class="notes">Press → through the day. The 3:00 bug shakes — pause for a laugh. Add a real detail at each stop if you can (who you talk to, what you're building).</aside>
+</section>
+
+<!-- ============ 20. Divider WZ ============ -->
+<section class="slide divider" data-sec="wz" data-title="Wei Zheng: VS → Hardware">
+  <div class="story" data-story></div>
+  <p class="div-time">10:00</p>
+  <h2 class="div-title">From Victoria School to hardware engineering</h2>
+  <p class="div-speaker"><i data-i="user-round"></i>Wei Zheng Ong</p>
+  <aside class="notes">Conner was software and AI. Wei Zheng is hardware and engineering. The two talks connect.</aside>
+</section>
+
+<!-- ============ 21. Sitting where you are ============ -->
+<section class="slide" data-sec="wz" data-title="I was sitting where you are sitting">
+  <div class="split">
+    <button class="photo" data-photo="wz"><span class="ph"><i data-i="image-plus"></i>Add a VS-era photo</span></button>
+    <div>
+      <h2 class="display" style="font-size:96px;margin-bottom:40px">"I was sitting where you are sitting."</h2>
+      <p class="lede" data-step="1" data-edit="wz1" data-placeholder>As a VS student I was into …</p>
+      <p class="lede" style="margin-top:18px" data-step="2" data-edit="wz2" data-placeholder>Did I know I'd be an engineer? …</p>
+    </div>
+  </div>
+  <aside class="notes">Open with the line. Talk about what you were like as a VS student, your subjects and interests, and whether you knew you wanted to be an engineer. Press E to fill the placeholders and add a photo.</aside>
+</section>
+
+<!-- ============ 22. WZ pathway ============ -->
+<section class="slide" data-sec="wz" data-title="Why engineering + my pathway">
+  <h2 class="title">Why engineering, and how I got here</h2>
+  <div class="pillars">
+    <div class="pillar" style="--c:var(--teal)" data-step="1"><i data-i="school"></i><h3>Victoria School</h3><p data-edit="wzp1" data-placeholder>What got me interested: …</p></div>
+    <div class="pillar" style="--c:var(--teal)" data-step="2"><i data-i="graduation-cap"></i><h3>Further education</h3><p data-edit="wzp2" data-placeholder>Where I went next, and why: …</p></div>
+    <div class="pillar" style="--c:var(--teal)" data-step="3"><i data-i="cpu"></i><h3>Engineering career</h3><p data-edit="wzp3" data-placeholder>What I work on now: …</p></div>
+  </div>
+  <p class="lede" style="margin-top:56px" data-step="4" data-edit="wzp4" data-placeholder>The kind of problems I enjoy solving: …</p>
+  <aside class="notes">Keep it practical, not academic. What attracted you to engineering, the problems you enjoyed solving, how your interests developed.</aside>
+</section>
+
+<!-- ============ 23. HW engineer what ============ -->
+<section class="slide" data-sec="wz" data-title="What a hardware engineer does">
+  <h2 class="title" style="margin-bottom:6px">When Conner's software needs something to run on…</h2>
+  <p class="lede">…hardware is the physical world that makes it possible.</p>
+  <div class="stackd">
+    <div class="layer ai" data-step="1"><i data-i="sparkles"></i><b>AI</b><span>Learns patterns and makes predictions</span></div>
+    <div class="layer sw" data-step="2"><i data-i="code-xml"></i><b>Software</b><span>The instructions, apps and systems</span></div>
+    <div class="layer hw" data-step="3"><i data-i="cpu"></i><b>Hardware</b><span>Chips, circuits, sensors, machines — things you can touch</span></div>
+  </div>
+  <div class="chips-row" data-step="4">
+    <span class="chip-lg"><i data-i="pencil-ruler"></i>Design</span><span class="chip-lg"><i data-i="flask-conical"></i>Testing</span><span class="chip-lg"><i data-i="microchip"></i>Components</span><span class="chip-lg"><i data-i="network"></i>Systems</span><span class="chip-lg"><i data-i="wrench"></i>Troubleshooting</span><span class="chip-lg"><i data-i="box"></i>Prototyping</span><span class="chip-lg"><i data-i="handshake"></i>Teamwork</span>
+  </div>
+  <aside class="notes">Bring a physical object if you can (a board, a component, a prototype) and pass it around. Pick the chips that match your actual role and talk to two or three of them.</aside>
+</section>
+
+<!-- ============ 24. WZ day + skills ============ -->
+<section class="slide" data-sec="wz" data-title="Wei Zheng: day and skills">
+  <h2 class="title" style="margin-bottom:10px">What engineering takes</h2>
+  <div class="grid7">
+    <div class="tile" data-step="1"><i data-i="sigma"></i><b>Mathematics</b></div>
+    <div class="tile" data-step="1"><i data-i="atom"></i><b>Physics</b></div>
+    <div class="tile" data-step="2"><i data-i="puzzle"></i><b>Problem solving</b></div>
+    <div class="tile" data-step="2"><i data-i="pen-tool"></i><b>Design</b></div>
+    <div class="tile" data-step="3"><i data-i="telescope"></i><b>Curiosity</b></div>
+    <div class="tile" data-step="3"><i data-i="mountain"></i><b>Persistence</b></div>
+    <div class="tile" data-step="3"><i data-i="users"></i><b>Teamwork</b></div>
+    <div class="tile" data-step="4" style="background:var(--teal-10)"><i data-i="calendar-clock"></i><b data-edit="wzday" data-placeholder>A real day for me: …</b></div>
+  </div>
+  <aside class="notes">Skills first, then use the last tile to describe a realistic day: design, testing, troubleshooting, equipment, meetings, documentation, collaboration.</aside>
+</section>
+
+<!-- ============ 25. WZ advice ============ -->
+<section class="slide vcenter" data-sec="wz" data-title="Advice to VS students">
+  <p class="quote" data-edit="wzq" data-placeholder>"My advice to you: …"</p>
+  <p class="quote-by"><i data-i="user-round"></i>Wei Zheng Ong, Victoria School alumnus</p>
+  <aside class="notes">Personal and practical. One piece of advice you wish you'd had in Sec 3.</aside>
+</section>
+
+<!-- ============ 26. Divider QA ============ -->
+<section class="slide divider" data-sec="qa" data-title="Ask us anything">
+  <div class="story" data-story></div>
+  <p class="div-time">10:30</p>
+  <h2 class="div-title">Ask us anything: AI × Software × Hardware</h2>
+  <p class="div-speaker"><i data-i="users"></i>YF, Conner and Wei Zheng</p>
+  <aside class="notes">How do software, AI and hardware work together? Start with the scenario game, then the question board.</aside>
+</section>
+
+<!-- ============ 27. Who would you ask ============ -->
+<section class="slide" data-sec="qa" data-title="Who would you need?">
+  <div class="scen-tabs" id="scen-tabs"></div>
+  <p class="scen" id="scen"></p>
+  <div class="quiz who-grid" data-quiz id="who">
+    <button class="opt"><span class="k">A</span><i data-i="code-xml" style="color:var(--blue)"></i><span class="v">Software engineer</span></button>
+    <button class="opt"><span class="k">B</span><i data-i="cpu" style="color:var(--teal)"></i><span class="v">Hardware engineer</span></button>
+    <button class="opt"><span class="k">C</span><i data-i="sparkles" style="color:var(--purple)"></i><span class="v">AI engineer</span></button>
+    <button class="opt" data-correct><span class="k">D</span><i data-i="users"></i><span class="v">All of them</span></button>
+  </div>
+  <div class="breakdown" id="breakdown"></div>
+  <div class="quiz-bar" style="margin-top:22px"><button class="btn" data-reveal><i data-i="eye"></i>Reveal</button></div>
+  <aside class="notes">Students vote with cards. Reveal D, then walk through who does what. Switch scenario with the tabs. Message: real-world technology is interdisciplinary — built by different types of people working together.</aside>
+</section>
+
+<!-- ============ 28. Q&A board ============ -->
+<section class="slide" data-sec="qa" data-title="Question board">
+  <div class="qa" id="qa">
+    <div class="col ai" data-cat="ai"><h3><i data-i="sparkles"></i>AI</h3></div>
+    <div class="col sw" data-cat="sw"><h3><i data-i="code-xml"></i>Software</h3></div>
+    <div class="col hw" data-cat="hw"><h3><i data-i="cpu"></i>Hardware</h3></div>
+  </div>
+  <div class="qa-add"><select id="qa-cat" aria-label="Category"><option value="ai">AI</option><option value="sw">Software</option><option value="hw">Hardware</option></select><input id="qa-in" placeholder="Add a student question and press Enter"></div>
+  <div class="spot" id="spot"><div class="scat" id="spot-cat"></div><div class="qq" id="spot-q"></div><div class="hint">Click anywhere or press Esc to go back</div></div>
+  <script type="application/json" id="qa-data">[["ai","Will AI replace programmers?"],["ai","What technology will matter most when we're adults?"],["sw","How did you know you wanted to work in technology?"],["sw","What's the hardest part of your job?"],["hw","Do I need to be good at maths to work in AI or engineering?"],["hw","Should I choose JC or Polytechnic if I want to be an engineer?"]]</script>
+  <aside class="notes">Add the 10–15 questions VS staff pre-collected before the session (they're saved in this browser; press E then "Save as new file" to bake them in). Click a question to spotlight it for the room; clicking it again later marks it answered.</aside>
+</section>
+
+<!-- ============ 29. Divider SkillsBuild ============ -->
+<section class="slide divider" data-sec="sb" data-title="SkillsBuild: your first 30 minutes">
+  <div class="story" data-story></div>
+  <p class="div-time">11:00</p>
+  <h2 class="div-title">Your first 30 minutes as an AI learner</h2>
+  <p class="div-speaker"><i data-i="graduation-cap"></i>IBM SkillsBuild</p>
+  <aside class="notes">Not "here's a website, please sign up." Instead: "You've heard what AI and engineering careers look like. Now we're going to give you somewhere you can start learning."</aside>
+</section>
+
+<!-- ============ 30. Listening → Doing ============ -->
+<section class="slide vcenter" data-sec="sb" data-title="Listening → Exploring → Doing">
+  <h2 class="title">You don't have to wait until university to start learning about technology.</h2>
+  <div class="ladder">
+    <span class="rung shown">Listening</span><i data-i="arrow-right"></i>
+    <span class="rung" data-step="1">Exploring</span><i data-i="arrow-right"></i>
+    <span class="rung" data-step="2">Doing</span>
+  </div>
+  <aside class="notes">"You can start exploring now." We've done the listening part of the morning — the next 45 minutes are exploring and doing.</aside>
+</section>
+
+<!-- ============ 31. Catalogue ============ -->
+<section class="slide" data-sec="sb" data-title="Pick something you're curious about">
+  <h2 class="title">Pick something you're genuinely curious about</h2>
+  <div class="cats" id="cats">
+    <button class="cat"><i data-i="sparkles"></i>AI</button>
+    <button class="cat"><i data-i="shield-check"></i>Cybersecurity</button>
+    <button class="cat"><i data-i="cloud"></i>Cloud</button>
+    <button class="cat"><i data-i="chart-column"></i>Data</button>
+    <button class="cat"><i data-i="monitor"></i>Technology</button>
+    <button class="cat"><i data-i="presentation"></i>Professional skills</button>
+  </div>
+  <p class="lede" style="margin-top:44px">You don't need to learn everything. Start with one.</p>
+  <aside class="notes">Don't scroll the whole catalogue. Ask for a show of hands per category and tap the most popular ones.</aside>
+</section>
+
+<!-- ============ 32. Hands-on ============ -->
+<section class="slide" data-sec="sb" data-title="Hands-on challenge + timer">
+  <h2 class="title" style="margin-bottom:10px">Hands-on challenge</h2>
+  <div class="hands">
+    <ol class="steps5" id="steps5">
+      <li>Sign up for SkillsBuild</li>
+      <li>Open the course we picked</li>
+      <li>Complete the first section</li>
+      <li>Try the activity</li>
+      <li>Finish the small challenge</li>
+    </ol>
+    <div class="timer" data-minutes="25">
+      <div class="lbl">Time left</div>
+      <div class="clock">25:00</div>
+      <div class="tbar"><i></i></div>
+      <div class="ctl"><button class="btn go" data-t="go"><i data-i="play"></i>Start</button><button class="btn" data-t="reset"><i data-i="rotate-ccw"></i></button></div>
+    </div>
+  </div>
+  <aside class="notes">Tap each step when most of the room has done it. Goal: students feel "I can actually learn this myself." If registration stalls for more than 10 minutes, jump to the fallback: Design Your Own AI Agent (next slides).</aside>
+</section>
+
+<!-- ============ 33. Mission ============ -->
+<section class="slide" data-sec="sb" data-title="My mission">
+  <h2 class="title" style="margin-bottom:24px">Your personal challenge</h2>
+  <div class="mission">
+    <div><h3><i data-i="book-open"></i>One thing I want to learn</h3><div class="pick" id="pick-learn"></div></div>
+    <div><h3><i data-i="hammer"></i>One thing I want to build</h3><div class="pick" id="pick-build"></div></div>
+  </div>
+  <div class="pledge" id="pledge"></div>
+  <aside class="notes">Ask a few students to call out their picks; tap them to build their sentence live. Every student writes their own on paper or on the back of their A/B/C/D cards.</aside>
+</section>
+
+<!-- ============ 34. Fallback agent ============ -->
+<section class="slide" data-sec="sb" data-title="Fallback: design your own AI agent">
+  <h2 class="title" style="margin-bottom:6px">Design your own AI agent</h2>
+  <p class="lede" style="font-size:26px;margin-bottom:24px">Imagine you're building an AI assistant for students.</p>
+  <div class="agent">
+    <div class="qs" id="agent-qs">
+      <label><i class="n">1</i>What problem does it solve?<input data-k="problem" placeholder="e.g. I forget homework deadlines"></label>
+      <label><i class="n">2</i>What information does it need?<input data-k="info" placeholder="e.g. my timetable, teachers' announcements"></label>
+      <label><i class="n">3</i>What should it be able to do?<input data-k="can" placeholder="e.g. remind me two days before"></label>
+      <label><i class="n">4</i>What should it NOT do?<input data-k="cannot" placeholder="e.g. do my homework for me"></label>
+      <label><i class="n">5</i>Who would use it?<input data-k="who" placeholder="e.g. Sec 3 students"></label>
+    </div>
+    <div class="card-agent">
+      <div class="hd"><div class="av"><i data-i="bot"></i></div><input class="nm" id="agent-name" value="Name your agent" aria-label="Agent name"></div>
+      <div class="row"><b>Solves</b><span data-o="problem">…</span></div>
+      <div class="row"><b>Needs to know</b><span data-o="info">…</span></div>
+      <div class="row"><b>Can</b><span data-o="can">…</span></div>
+      <div class="row no"><b>Will never</b><span data-o="cannot">…</span></div>
+      <div class="row"><b>Made for</b><span data-o="who">…</span></div>
+    </div>
+  </div>
+  <aside class="notes">Fallback if SkillsBuild access fails — also works on paper. Build one agent together as a class, then groups design their own. Point out question 4: deciding what AI should NOT do is part of using it responsibly.</aside>
+</section>
+
+<!-- ============ 35. Divider wrap ============ -->
+<section class="slide divider" data-sec="wrap" data-title="Wrap up">
+  <div class="story" data-story></div>
+  <p class="div-time">11:45</p>
+  <h2 class="div-title">Three things to take home</h2>
+  <p class="div-speaker"><i data-i="users"></i>YF and Victoria School staff</p>
+  <aside class="notes">Don't end with only "thank you for coming." Three messages, then the final question.</aside>
+</section>
+
+<!-- ============ 36. Msg 1 ============ -->
+<section class="slide vcenter" data-sec="wrap" data-title="1. You don't need to know yet">
+  <div class="lines">
+    <p data-step="1">Your career can change.</p>
+    <p data-step="2">Conner's did.</p>
+    <p data-step="3">Wei Zheng's is different.</p>
+    <p data-step="4">That's completely normal.</p>
+  </div>
+  <aside class="notes">Message 1: you don't need to know your career yet.</aside>
+</section>
+
+<!-- ============ 37. Msg 2 ============ -->
+<section class="slide vcenter" data-sec="wrap" data-title="2. Not just coding">
+  <h2 class="title">Technology careers aren't just about coding</h2>
+  <div class="eq">
+    <div class="term" data-step="1"><i data-i="users"></i>People</div><span class="plus" data-step="2">+</span>
+    <div class="term" data-step="2"><i data-i="circle-help"></i>Problems</div><span class="plus" data-step="3">+</span>
+    <div class="term" data-step="3"><i data-i="palette"></i>Creativity</div><span class="plus" data-step="4">+</span>
+    <div class="term" data-step="4"><i data-i="cpu"></i>Technology</div>
+  </div>
+  <aside class="notes">Message 2. Technology is a tool for solving problems — for people.</aside>
+</section>
+
+<!-- ============ 38. Msg 3 ============ -->
+<section class="slide" data-sec="wrap" data-title="3. Start building now">
+  <h2 class="title">Start small. Start now.</h2>
+  <div class="lbs">
+    <div class="lb" data-step="1"><i data-i="book-open"></i><b>Learn something</b><span>One SkillsBuild lesson. One video. One question you look up.</span></div>
+    <div class="lb" data-step="2"><i data-i="hammer"></i><b>Build something</b><span>A tiny game, a website, a chatbot. It doesn't have to work first time.</span></div>
+    <div class="lb" data-step="3"><i data-i="share-2"></i><b>Share something</b><span>Show a friend, a teacher, your family. Then make it better.</span></div>
+  </div>
+  <aside class="notes">Message 3. "You don't need to start with a huge project."</aside>
+</section>
+
+<!-- ============ 39. Final ============ -->
+<section class="slide center final" data-sec="wrap" data-title="What will you build?">
+  <canvas class="dots2" width="1600" height="900" style="position:absolute;inset:0"></canvas>
+  <div style="position:relative;z-index:2">
+    <h2 class="display">What will you build?</h2>
+    <div class="final-thread"><span>Curiosity</span><i data-i="arrow-right"></i><span>Skills</span><i data-i="arrow-right"></i><span>Experiments</span><i data-i="arrow-right"></i><span>Opportunities</span></div>
+  </div>
+  <aside class="notes">"Ten years from now, some of you might be software developers. Some of you might be engineers. Some of you might be doing something that doesn't even exist today. You don't have to decide today. But you can start exploring today." Then photo and shirt distribution.</aside>
+</section>
+
+</div>
+
+<div id="dock">
+  <button id="b-prev" title="Back (←)"><i data-i="chevron-left"></i></button>
+  <button id="b-next" title="Next (→ or Space)"><i data-i="chevron-right"></i></button>
+  <button id="b-notes" title="Speaker notes (N)"><i data-i="notebook-pen"></i></button>
+  <button id="b-pres" title="Presenter window (P)"><i data-i="monitor-speaker"></i></button>
+  <button id="b-grid" title="All slides (G)"><i data-i="layout-grid"></i></button>
+  <button id="b-edit" title="Edit text and photos (E)"><i data-i="pencil"></i></button>
+  <button id="b-fs" title="Full screen (F)"><i data-i="maximize"></i></button>
+</div>
+<div id="notes"></div>
+<div id="grid"><h2>All slides</h2><div class="g"></div></div>
+<div id="editbar"><button id="save-file"><i data-i="download"></i> Save as new file</button><button class="sec" id="done-edit">Done editing</button></div>
+<div id="toast"></div>
+<input type="file" id="file-in" accept="image/*" hidden>
+
+<script>
+const ICONS={"arrow-right":"<path d=\"M5 12h14\" /> <path d=\"m12 5 7 7-7 7\" />","arrow-up-right":"<path d=\"M7 7h10v10\" /> <path d=\"M7 17 17 7\" />","atom":"<circle cx=\"12\" cy=\"12\" r=\"1\" /> <path d=\"M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5Z\" /> <path d=\"M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5Z\" />","bell-ring":"<path d=\"M10.268 21a2 2 0 0 0 3.464 0\" /> <path d=\"M22 8c0-2.3-.8-4.3-2-6\" /> <path d=\"M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326\" /> <path d=\"M4 2C2.8 3.7 2 5.7 2 8\" />","bluetooth":"<path d=\"m7 7 10 10-5 5V2l5 5L7 17\" />","book-open":"<path d=\"M12 5v16\" /> <path d=\"M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z\" />","bot":"<path d=\"M12 8V4H8\" /> <rect width=\"16\" height=\"12\" x=\"4\" y=\"8\" rx=\"2\" /> <path d=\"M2 14h2\" /> <path d=\"M20 14h2\" /> <path d=\"M15 13v2\" /> <path d=\"M9 13v2\" />","box":"<path d=\"M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z\" /> <path d=\"m3.3 7 8.7 5 8.7-5\" /> <path d=\"M12 22V12\" />","brain":"<path d=\"M12 18V5\" /> <path d=\"M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4\" /> <path d=\"M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5\" /> <path d=\"M17.997 5.125a4 4 0 0 1 2.526 5.77\" /> <path d=\"M18 18a4 4 0 0 0 2-7.464\" /> <path d=\"M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517\" /> <path d=\"M6 18a4 4 0 0 1-2-7.464\" /> <path d=\"M6.003 5.125a4 4 0 0 0-2.526 5.77\" />","bug":"<path d=\"M12 20v-9\" /> <path d=\"M14 7a4 4 0 0 1 4 4v3a6 6 0 0 1-12 0v-3a4 4 0 0 1 4-4z\" /> <path d=\"M14.12 3.88 16 2\" /> <path d=\"M21 21a4 4 0 0 0-3.81-4\" /> <path d=\"M21 5a4 4 0 0 1-3.55 3.97\" /> <path d=\"M22 13h-4\" /> <path d=\"M3 21a4 4 0 0 1 3.81-4\" /> <path d=\"M3 5a4 4 0 0 0 3.55 3.97\" /> <path d=\"M6 13H2\" /> <path d=\"m8 2 1.88 1.88\" /> <path d=\"M9 7.13V6a3 3 0 1 1 6 0v1.13\" />","building-2":"<path d=\"M10 12h4\" /> <path d=\"M10 8h4\" /> <path d=\"M14 21v-3a2 2 0 0 0-4 0v3\" /> <path d=\"M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2\" /> <path d=\"M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16\" />","bus":"<path d=\"M8 6v6\" /> <path d=\"M15 6v6\" /> <path d=\"M2 12h19.6\" /> <path d=\"M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3\" /> <circle cx=\"7\" cy=\"18\" r=\"2\" /> <path d=\"M9 18h5\" /> <circle cx=\"16\" cy=\"18\" r=\"2\" />","calculator":"<rect width=\"16\" height=\"20\" x=\"4\" y=\"2\" rx=\"2\" /> <line x1=\"8\" x2=\"16\" y1=\"6\" y2=\"6\" /> <line x1=\"16\" x2=\"16\" y1=\"14\" y2=\"18\" /> <path d=\"M16 10h.01\" /> <path d=\"M12 10h.01\" /> <path d=\"M8 10h.01\" /> <path d=\"M12 14h.01\" /> <path d=\"M8 14h.01\" /> <path d=\"M12 18h.01\" /> <path d=\"M8 18h.01\" />","calendar-clock":"<path d=\"M16 14v2.2l1.6 1\" /> <path d=\"M16 2v3\" /> <path d=\"M21 7.338V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h2.338\" /> <path d=\"M3 9h5.859\" /> <path d=\"M8 2v3\" /> <circle cx=\"16\" cy=\"16\" r=\"6\" />","camera":"<path d=\"M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z\" /> <circle cx=\"12\" cy=\"13\" r=\"3\" />","can":"<path d=\"M21 10.5a9 2.5 0 01-18 0v8a9 2.5 0 0018 0z\" /> <path d=\"M21 10.5A9 2.5 25.32 004.59 3.47 9 2.5 25.32 0021 10.5\" /> <path d=\"M3 10.5a9 2.5 0 016.527-2.405\" /> <path d=\"M9 16.858a31 31 0 006 0\" />","cat":"<path d=\"M12 5c.67 0 1.35.09 2 .26 1.78-2 5.03-2.84 6.42-2.26 1.4.58-.42 7-.42 7 .57 1.07 1 2.24 1 3.44C21 17.9 16.97 21 12 21s-9-3-9-7.56c0-1.25.5-2.4 1-3.44 0 0-1.89-6.42-.5-7 1.39-.58 4.72.23 6.5 2.23A9.04 9.04 0 0 1 12 5Z\" /> <path d=\"M8 14v.5\" /> <path d=\"M16 14v.5\" /> <path d=\"M11.25 16.25h1.5L12 17l-.75-.75Z\" />","chart-column":"<path d=\"M3 3v16a2 2 0 0 0 2 2h16\" /> <path d=\"M18 17V9\" /> <path d=\"M13 17V5\" /> <path d=\"M8 17v-3\" />","check":"<path d=\"M20 6 9 17l-5-5\" />","chevron-left":"<path d=\"m15 18-6-6 6-6\" />","chevron-right":"<path d=\"m9 18 6-6-6-6\" />","circle-help":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3\" /> <path d=\"M12 17h.01\" />","circle-x":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"m15 9-6 6\" /> <path d=\"m9 9 6 6\" />","clock":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M12 6v6l4 2\" />","clock-9":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M12 6v6H8\" />","cloud":"<path d=\"M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z\" />","code-xml":"<path d=\"m18 16 4-4-4-4\" /> <path d=\"m6 8-4 4 4 4\" /> <path d=\"m14.5 4-5 16\" />","coffee":"<path d=\"M10 2v2\" /> <path d=\"M14 2v2\" /> <path d=\"M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1\" /> <path d=\"M6 2v2\" />","cpu":"<path d=\"M12 20v2\" /> <path d=\"M12 2v2\" /> <path d=\"M17 20v2\" /> <path d=\"M17 2v2\" /> <path d=\"M2 12h2\" /> <path d=\"M2 17h2\" /> <path d=\"M2 7h2\" /> <path d=\"M20 12h2\" /> <path d=\"M20 17h2\" /> <path d=\"M20 7h2\" /> <path d=\"M7 20v2\" /> <path d=\"M7 2v2\" /> <rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"2\" /> <rect x=\"8\" y=\"8\" width=\"8\" height=\"8\" rx=\"1\" />","database":"<ellipse cx=\"12\" cy=\"5\" rx=\"9\" ry=\"3\" /> <path d=\"M3 5V19A9 3 0 0 0 21 19V5\" /> <path d=\"M3 12A9 3 0 0 0 21 12\" />","dock":"<path d=\"M2 8h20\" /> <rect width=\"20\" height=\"16\" x=\"2\" y=\"4\" rx=\"2\" /> <path d=\"M6 16h12\" />","dot":"<circle cx=\"12\" cy=\"12\" r=\"1\" />","download":"<path d=\"M12 15V3\" /> <path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\" /> <path d=\"m7 10 5 5 5-5\" />","eye":"<path d=\"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0\" /> <circle cx=\"12\" cy=\"12\" r=\"3\" />","file":"<path d=\"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z\" /> <path d=\"M14 2v5a1 1 0 0 0 1 1h5\" />","file-text":"<path d=\"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z\" /> <path d=\"M14 2v5a1 1 0 0 0 1 1h5\" /> <path d=\"M10 9H8\" /> <path d=\"M16 13H8\" /> <path d=\"M16 17H8\" />","flask-conical":"<path d=\"M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2\" /> <path d=\"M6.453 15h11.094\" /> <path d=\"M8.5 2h7\" />","focus":"<circle cx=\"12\" cy=\"12\" r=\"3\" /> <path d=\"M3 7V5a2 2 0 0 1 2-2h2\" /> <path d=\"M17 3h2a2 2 0 0 1 2 2v2\" /> <path d=\"M21 17v2a2 2 0 0 1-2 2h-2\" /> <path d=\"M7 21H5a2 2 0 0 1-2-2v-2\" />","gamepad-2":"<line x1=\"6\" x2=\"10\" y1=\"11\" y2=\"11\" /> <line x1=\"8\" x2=\"8\" y1=\"9\" y2=\"13\" /> <line x1=\"15\" x2=\"15.01\" y1=\"12\" y2=\"12\" /> <line x1=\"18\" x2=\"18.01\" y1=\"10\" y2=\"10\" /> <path d=\"M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z\" />","globe":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20\" /> <path d=\"M2 12h20\" />","graduation-cap":"<path d=\"M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z\" /> <path d=\"M22 10v6\" /> <path d=\"M6 12.5V16a6 3 0 0 0 12 0v-3.5\" />","grid":"<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\" /> <path d=\"M3 9h18\" /> <path d=\"M3 15h18\" /> <path d=\"M9 3v18\" /> <path d=\"M15 3v18\" />","hammer":"<path d=\"m15 12-9.373 9.373a1 1 0 0 1-3.001-3L12 9\" /> <path d=\"m18 15 4-4\" /> <path d=\"m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172v-.344a2 2 0 0 0-.586-1.414l-1.657-1.657A6 6 0 0 0 12.516 3H9l1.243 1.243A6 6 0 0 1 12 8.485V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5\" />","hand":"<path d=\"M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2\" /> <path d=\"M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2\" /> <path d=\"M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8\" /> <path d=\"M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15\" />","handshake":"<path d=\"m11 17 2 2a1 1 0 1 0 3-3\" /> <path d=\"m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4\" /> <path d=\"m21 3 1 11h-2\" /> <path d=\"M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3\" /> <path d=\"M3 4h8\" />","hd":"<path d=\"M10 12H6\" /> <path d=\"M10 15V9\" /> <path d=\"M14 14.5a.5.5 0 0 0 .5.5h1a2.5 2.5 0 0 0 2.5-2.5v-1A2.5 2.5 0 0 0 15.5 9h-1a.5.5 0 0 0-.5.5z\" /> <path d=\"M6 15V9\" /> <rect x=\"2\" y=\"5\" width=\"20\" height=\"14\" rx=\"2\" />","history":"<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\" /> <path d=\"M3 3v5h5\" /> <path d=\"M12 7v5l4 2\" />","image-plus":"<path d=\"M16 5h6\" /> <path d=\"M19 2v6\" /> <path d=\"M21 11.5V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7.5\" /> <path d=\"m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21\" /> <circle cx=\"9\" cy=\"9\" r=\"2\" />","info":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M12 16v-4\" /> <path d=\"M12 8h.01\" />","laptop":"<path d=\"M18 5a2 2 0 0 1 2 2v8.526a2 2 0 0 0 .212.897l1.068 2.127a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45l1.068-2.127A2 2 0 0 0 4 15.526V7a2 2 0 0 1 2-2z\" /> <path d=\"M20.054 15.987H3.946\" />","layout-grid":"<rect width=\"7\" height=\"7\" x=\"3\" y=\"3\" rx=\"1\" /> <rect width=\"7\" height=\"7\" x=\"14\" y=\"3\" rx=\"1\" /> <rect width=\"7\" height=\"7\" x=\"14\" y=\"14\" rx=\"1\" /> <rect width=\"7\" height=\"7\" x=\"3\" y=\"14\" rx=\"1\" />","lightbulb":"<path d=\"M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5\" /> <path d=\"M9 18h6\" /> <path d=\"M10 22h4\" />","link":"<path d=\"M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71\" /> <path d=\"M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71\" />","map-pin":"<path d=\"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0\" /> <circle cx=\"12\" cy=\"10\" r=\"3\" />","maximize":"<path d=\"M8 3H5a2 2 0 0 0-2 2v3\" /> <path d=\"M21 8V5a2 2 0 0 0-2-2h-3\" /> <path d=\"M3 16v3a2 2 0 0 0 2 2h3\" /> <path d=\"M16 21h3a2 2 0 0 0 2-2v-3\" />","message-circle-question":"<path d=\"M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719\" /> <path d=\"M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3\" /> <path d=\"M12 17h.01\" />","messages-square":"<path d=\"M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z\" /> <path d=\"M20 9a2 2 0 0 1 2 2v10.286a.71.71 0 0 1-1.212.502l-2.202-2.202A2 2 0 0 0 17.172 19H10a2 2 0 0 1-2-2v-1\" />","microchip":"<path d=\"M10 12h4\" /> <path d=\"M10 17h4\" /> <path d=\"M10 7h4\" /> <path d=\"M18 12h2\" /> <path d=\"M18 18h2\" /> <path d=\"M18 6h2\" /> <path d=\"M4 12h2\" /> <path d=\"M4 18h2\" /> <path d=\"M4 6h2\" /> <rect x=\"6\" y=\"2\" width=\"12\" height=\"20\" rx=\"2\" />","monitor":"<rect width=\"20\" height=\"14\" x=\"2\" y=\"3\" rx=\"2\" /> <line x1=\"8\" x2=\"16\" y1=\"21\" y2=\"21\" /> <line x1=\"12\" x2=\"12\" y1=\"17\" y2=\"21\" />","monitor-smartphone":"<path d=\"M18 8V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h8\" /> <path d=\"M10 19v-3.96 3.15\" /> <path d=\"M7 19h5\" /> <rect width=\"6\" height=\"10\" x=\"16\" y=\"12\" rx=\"2\" />","monitor-speaker":"<path d=\"M5.5 20H8\" /> <path d=\"M17 9h.01\" /> <rect width=\"10\" height=\"16\" x=\"12\" y=\"4\" rx=\"2\" /> <path d=\"M8 6H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h4\" /> <circle cx=\"17\" cy=\"15\" r=\"1\" />","mountain":"<path d=\"m8 3 4 8 5-5 5 15H2L8 3z\" />","mouse-pointer-click":"<path d=\"M14 4.1 12 6\" /> <path d=\"m5.1 8-2.9-.8\" /> <path d=\"m6 12-1.9 2\" /> <path d=\"M7.2 2.2 8 5.1\" /> <path d=\"M9.037 9.69a.498.498 0 0 1 .653-.653l11 4.5a.5.5 0 0 1-.074.949l-4.349 1.041a1 1 0 0 0-.74.739l-1.04 4.35a.5.5 0 0 1-.95.074z\" />","music":"<path d=\"M9 18V5l12-2v13\" /> <circle cx=\"6\" cy=\"18\" r=\"3\" /> <circle cx=\"18\" cy=\"16\" r=\"3\" />","network":"<rect x=\"16\" y=\"16\" width=\"6\" height=\"6\" rx=\"1\" /> <rect x=\"2\" y=\"16\" width=\"6\" height=\"6\" rx=\"1\" /> <rect x=\"9\" y=\"2\" width=\"6\" height=\"6\" rx=\"1\" /> <path d=\"M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3\" /> <path d=\"M12 12V8\" />","notebook-pen":"<path d=\"M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4\" /> <path d=\"M2 6h4\" /> <path d=\"M2 10h4\" /> <path d=\"M2 14h4\" /> <path d=\"M2 18h4\" /> <path d=\"M21.378 5.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z\" />","palette":"<path d=\"M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z\" /> <circle cx=\"13.5\" cy=\"6.5\" r=\".5\" fill=\"currentColor\" /> <circle cx=\"17.5\" cy=\"10.5\" r=\".5\" fill=\"currentColor\" /> <circle cx=\"6.5\" cy=\"12.5\" r=\".5\" fill=\"currentColor\" /> <circle cx=\"8.5\" cy=\"7.5\" r=\".5\" fill=\"currentColor\" />","pause":"<rect x=\"14\" y=\"3\" width=\"5\" height=\"18\" rx=\"1\" /> <rect x=\"5\" y=\"3\" width=\"5\" height=\"18\" rx=\"1\" />","pen-tool":"<path d=\"M15.707 21.293a1 1 0 0 1-1.414 0l-1.586-1.586a1 1 0 0 1 0-1.414l5.586-5.586a1 1 0 0 1 1.414 0l1.586 1.586a1 1 0 0 1 0 1.414z\" /> <path d=\"m18 13-1.375-6.874a1 1 0 0 0-.746-.776L3.235 2.028a1 1 0 0 0-1.207 1.207L5.35 15.879a1 1 0 0 0 .776.746L13 18\" /> <path d=\"m2.3 2.3 7.286 7.286\" /> <circle cx=\"11\" cy=\"11\" r=\"2\" />","pencil":"<path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\" /> <path d=\"m15 5 4 4\" />","pencil-ruler":"<path d=\"M13 7 8.7 2.7a2.41 2.41 0 0 0-3.4 0L2.7 5.3a2.41 2.41 0 0 0 0 3.4L7 13\" /> <path d=\"m8 6 2-2\" /> <path d=\"m18 16 2-2\" /> <path d=\"m17 11 4.3 4.3c.94.94.94 2.46 0 3.4l-2.6 2.6c-.94.94-2.46.94-3.4 0L11 17\" /> <path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\" /> <path d=\"m15 5 4 4\" />","play":"<path d=\"M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z\" />","plus":"<path d=\"M5 12h14\" /> <path d=\"M12 5v14\" />","presentation":"<path d=\"M2 3h20\" /> <path d=\"M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3\" /> <path d=\"m7 21 5-5 5 5\" />","puzzle":"<path d=\"M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z\" />","quote":"<path d=\"M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z\" /> <path d=\"M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z\" />","refresh-cw":"<path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\" /> <path d=\"M21 3v5h-5\" /> <path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\" /> <path d=\"M8 16H3v5\" />","rocket":"<path d=\"M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5\" /> <path d=\"M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09\" /> <path d=\"M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z\" /> <path d=\"M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05\" />","rotate-ccw":"<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\" /> <path d=\"M3 3v5h5\" />","save":"<path d=\"M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z\" /> <path d=\"M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7\" /> <path d=\"M7 3v4a1 1 0 0 0 1 1h7\" />","scan-barcode":"<path d=\"M3 7V5a2 2 0 0 1 2-2h2\" /> <path d=\"M17 3h2a2 2 0 0 1 2 2v2\" /> <path d=\"M21 17v2a2 2 0 0 1-2 2h-2\" /> <path d=\"M7 21H5a2 2 0 0 1-2-2v-2\" /> <path d=\"M8 7v10\" /> <path d=\"M12 7v10\" /> <path d=\"M17 7v10\" />","school":"<path d=\"M14 21v-3a2 2 0 0 0-4 0v3\" /> <path d=\"M18 4.933V21\" /> <path d=\"m4 6 7.106-3.79a2 2 0 0 1 1.788 0L20 6\" /> <path d=\"m6 11-3.52 2.147a1 1 0 0 0-.48.854V19a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a1 1 0 0 0-.48-.853L18 11\" /> <path d=\"M6 4.933V21\" /> <circle cx=\"12\" cy=\"9\" r=\"2\" />","search":"<path d=\"m21 21-4.34-4.34\" /> <circle cx=\"11\" cy=\"11\" r=\"8\" />","share-2":"<circle cx=\"18\" cy=\"5\" r=\"3\" /> <circle cx=\"6\" cy=\"12\" r=\"3\" /> <circle cx=\"18\" cy=\"19\" r=\"3\" /> <line x1=\"8.59\" x2=\"15.42\" y1=\"13.51\" y2=\"17.49\" /> <line x1=\"15.41\" x2=\"8.59\" y1=\"6.51\" y2=\"10.49\" />","sheet":"<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\" ry=\"2\" /> <line x1=\"3\" x2=\"21\" y1=\"9\" y2=\"9\" /> <line x1=\"3\" x2=\"21\" y1=\"15\" y2=\"15\" /> <line x1=\"9\" x2=\"9\" y1=\"9\" y2=\"21\" /> <line x1=\"15\" x2=\"15\" y1=\"9\" y2=\"21\" />","shield-check":"<path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\" /> <path d=\"m9 12 2 2 4-4\" />","sigma":"<path d=\"M18 7V5a1 1 0 0 0-1-1H6.5a.5.5 0 0 0-.4.8l4.5 6a2 2 0 0 1 0 2.4l-4.5 6a.5.5 0 0 0 .4.8H17a1 1 0 0 0 1-1v-2\" />","smartphone":"<rect width=\"14\" height=\"20\" x=\"5\" y=\"2\" rx=\"2\" ry=\"2\" /> <path d=\"M12 18h.01\" />","soup":"<path d=\"M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z\" /> <path d=\"M7 21h10\" /> <path d=\"M19.5 12 22 6\" /> <path d=\"M16.25 3c.27.1.8.53.75 1.36-.06.83-.93 1.2-1 2.02-.05.78.34 1.24.73 1.62\" /> <path d=\"M11.25 3c.27.1.8.53.74 1.36-.05.83-.93 1.2-.98 2.02-.06.78.33 1.24.72 1.62\" /> <path d=\"M6.25 3c.27.1.8.53.75 1.36-.06.83-.93 1.2-1 2.02-.05.78.34 1.24.74 1.62\" />","sparkles":"<path d=\"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z\" /> <path d=\"M20 2v4\" /> <path d=\"M22 4h-4\" /> <circle cx=\"4\" cy=\"20\" r=\"2\" />","split":"<path d=\"M16 3h5v5\" /> <path d=\"M8 3H3v5\" /> <path d=\"M12 22v-8.3a4 4 0 0 0-1.172-2.872L3 3\" /> <path d=\"m15 9 6-6\" />","stamp":"<path d=\"M14 13V8.5C14 7 15 7 15 5a3 3 0 0 0-6 0c0 2 1 2 1 3.5V13\" /> <path d=\"M20 15.5a2.5 2.5 0 0 0-2.5-2.5h-11A2.5 2.5 0 0 0 4 15.5V17a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1z\" /> <path d=\"M5 22h14\" />","star":"<path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\" />","tag":"<path d=\"M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z\" /> <circle cx=\"7.5\" cy=\"7.5\" r=\".5\" fill=\"currentColor\" />","tags":"<path d=\"M13.172 2a2 2 0 0 1 1.414.586l6.71 6.71a2.4 2.4 0 0 1 0 3.408l-4.592 4.592a2.4 2.4 0 0 1-3.408 0l-6.71-6.71A2 2 0 0 1 6 9.172V3a1 1 0 0 1 1-1z\" /> <path d=\"M2 7v6.172a2 2 0 0 0 .586 1.414l6.71 6.71a2.4 2.4 0 0 0 3.191.193\" /> <circle cx=\"10.5\" cy=\"6.5\" r=\".5\" fill=\"currentColor\" />","telescope":"<path d=\"m10.065 12.493-6.18 1.318a.934.934 0 0 1-1.108-.702l-.537-2.15a1.07 1.07 0 0 1 .691-1.265l13.504-4.44\" /> <path d=\"m13.56 11.747 4.332-.924\" /> <path d=\"m16 21-3.105-6.21\" /> <path d=\"M16.485 5.94a2 2 0 0 1 1.455-2.425l1.09-.272a1 1 0 0 1 1.212.727l1.515 6.06a1 1 0 0 1-.727 1.213l-1.09.272a2 2 0 0 1-2.425-1.455z\" /> <path d=\"m6.158 8.633 1.114 4.456\" /> <path d=\"m8 21 3.105-6.21\" /> <circle cx=\"12\" cy=\"13\" r=\"2\" />","timer":"<line x1=\"10\" x2=\"14\" y1=\"2\" y2=\"2\" /> <line x1=\"12\" x2=\"15\" y1=\"14\" y2=\"11\" /> <circle cx=\"12\" cy=\"14\" r=\"8\" />","trending-up":"<path d=\"M16 7h6v6\" /> <path d=\"m22 7-8.5 8.5-5-5L2 17\" />","trophy":"<path d=\"M10 14.66V17a1 1 0 0 1-1 1 2 2 0 0 0-2 2v2\" /> <path d=\"M14 14.66V17a1 1 0 0 0 1 1 2 2 0 0 1 2 2v2\" /> <path d=\"M17.916 10H19.5A2.5 2.5 0 0 0 22 7.5V5a1 1 0 0 0-1-1h-3\" /> <path d=\"M4 22h16\" /> <path d=\"M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z\" /> <path d=\"M6.084 10H4.5A2.5 2.5 0 0 1 2 7.5V5a1 1 0 0 1 1-1h3\" />","user-round":"<circle cx=\"12\" cy=\"8\" r=\"5\" /> <path d=\"M20 21a8 8 0 0 0-16 0\" />","users":"<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\" /> <path d=\"M16 3.128a4 4 0 0 1 0 7.744\" /> <path d=\"M22 21v-2a4 4 0 0 0-3-3.87\" /> <circle cx=\"9\" cy=\"7\" r=\"4\" />","workflow":"<rect width=\"8\" height=\"8\" x=\"3\" y=\"3\" rx=\"2\" /> <path d=\"M7 11v4a2 2 0 0 0 2 2h4\" /> <rect width=\"8\" height=\"8\" x=\"13\" y=\"13\" rx=\"2\" />","wrench":"<path d=\"M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z\" />"};
+</script>
+<script>
+(()=>{
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const store={get(k){try{return localStorage.getItem('vsibm:'+k)}catch(e){return null}},set(k,v){try{localStorage.setItem('vsibm:'+k,v)}catch(e){}}};
+const ic=(n,style='')=>ICONS[n]?`<svg class="ico" ${style?`style="${style}"`:''} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n]}</svg>`:'';
+const hydrate=(r=document)=>$$('i[data-i]',r).forEach(el=>{el.outerHTML=ic(el.dataset.i,el.getAttribute('style')||'')});
+hydrate();
+
+const stage=$('#stage'), slides=$$('.slide');
+let scale=1;
+function fit(){scale=Math.min(innerWidth/1600,innerHeight/900);stage.style.transform=`translate(-50%,-50%) scale(${scale})`}
+addEventListener('resize',fit);fit();
+
+const SEC={ibm:{n:'Welcome to IBM',t:'9:00',c:'#0f62fe',who:'YF and the IBM team'},
+  conner:{n:'Conner Pang',t:'9:30',c:'#0f62fe',who:'Conner Pang'},
+  wz:{n:'Wei Zheng Ong',t:'10:00',c:'#007d79',who:'Wei Zheng Ong'},
+  qa:{n:'Ask us anything',t:'10:30',c:'#8a3ffc',who:'YF, Conner, Wei Zheng'},
+  sb:{n:'IBM SkillsBuild',t:'11:00',c:'#8a3ffc',who:'YF and the IBM team'},
+  wrap:{n:'Wrap up',t:'11:45',c:'#161616',who:'YF and VS staff'}};
+const ORDER=Object.keys(SEC);
+const AG={ibm:'Welcome to IBM and the IBM challenge',conner:'From IBM employee to software developer to AI builder',wz:'From Victoria School to hardware engineering',qa:'Ask us anything: AI × Software × Hardware',sb:'Your first 30 minutes as an AI learner',wrap:'What will you build?'};
+
+/* progress + agenda + story bars */
+const prog=document.createElement('div');prog.className='progress';
+ORDER.forEach(k=>{const cnt=slides.filter(s=>s.dataset.sec===k).length;const b=document.createElement('button');b.style.setProperty('--w',cnt);b.style.setProperty('--c',SEC[k].c);b.dataset.label=`${SEC[k].t}  ${SEC[k].n}`;b.dataset.sec=k;b.innerHTML='<i></i>';b.onclick=()=>go(slides.findIndex(s=>s.dataset.sec===k));prog.appendChild(b)});
+stage.appendChild(prog);
+const ag=$('#agenda');
+ORDER.forEach(k=>{const b=document.createElement('button');b.style.setProperty('--c',SEC[k].c);b.innerHTML=`<span class="tm">${SEC[k].t}</span><span>${AG[k]}</span><span class="who">${SEC[k].who}</span>${ic('arrow-up-right')}`;b.onclick=()=>go(slides.findIndex((s,i)=>i>1&&s.dataset.sec===k)||0);ag.appendChild(b)});
+$$('[data-story]').forEach(el=>{const sec=el.closest('.slide').dataset.sec,idx=ORDER.indexOf(sec);el.style.setProperty('--c',SEC[sec].c);el.innerHTML=ORDER.map((k,i)=>`<span class="${i<idx?'done':i===idx?'now':''}"></span>`).join('');el.closest('.slide').style.setProperty('--c',SEC[sec].c)});
+
+/* steps + navigation */
+let cur=0;
+const stepList=sl=>[...new Set($$('[data-step]',sl).map(e=>+e.dataset.step))].sort((a,b)=>a-b);
+function setStep(sl,n){sl.dataset.at=n;$$('[data-step]',sl).forEach(e=>e.classList.toggle('shown',+e.dataset.step<=n));sl.dispatchEvent(new CustomEvent('step',{detail:n}))}
+function go(i,full){i=Math.max(0,Math.min(slides.length-1,i));const prev=cur;cur=i;
+  slides.forEach((s,k)=>{s.classList.toggle('active',k===i);s.classList.toggle('past',k<i)});
+  const st=stepList(slides[i]);setStep(slides[i],full&&st.length?st[st.length-1]:0);
+  slides[i].dispatchEvent(new Event('enter'));
+  const sec=slides[i].dataset.sec;$('.chrome-top .n').textContent=SEC[sec].n;$('.chrome-top .t').textContent=SEC[sec].t;
+  $('.chrome-top').style.visibility=slides[i].classList.contains('hero')||slides[i].classList.contains('final')?'hidden':'visible';
+  $$('.progress button').forEach(b=>{const ss=slides.map((s,k)=>[s,k]).filter(([s])=>s.dataset.sec===b.dataset.sec).map(x=>x[1]);const f=i>ss[ss.length-1]?100:i<ss[0]?0:((i-ss[0]+1)/ss.length*100);b.style.setProperty('--f',f+'%')});
+  try{history.replaceState(null,'','#'+(i+1))}catch(e){}
+  renderNotes();}
+function next(){const sl=slides[cur],at=+(sl.dataset.at||0),rest=stepList(sl).filter(s=>s>at);rest.length?setStep(sl,rest[0]):go(cur+1);renderNotes()}
+function prev(){const sl=slides[cur],at=+(sl.dataset.at||0);if(at>0){const lower=stepList(sl).filter(s=>s<at);setStep(sl,lower.length?lower[lower.length-1]:0)}else go(cur-1,true);renderNotes()}
+
+/* notes + presenter */
+let pw=null;
+function renderNotes(){const sl=slides[cur],nx=slides[cur+1];const n=$('.notes',sl);const html=`<h4>Slide ${cur+1} of ${slides.length}  ${sl.dataset.title}</h4><div>${n?n.innerHTML:''}</div><div class="nx">${nx?'Next: '+nx.dataset.title:'End'}</div>`;$('#notes').innerHTML=html;
+  if(pw&&!pw.closed){const d=pw.document;d.getElementById('body').innerHTML=html;const steps=stepList(sl);d.getElementById('st').textContent=steps.length?`Builds: ${+(sl.dataset.at||0)?stepList(sl).indexOf(+sl.dataset.at)+1:0} of ${steps.length}`:''}}
+function presenter(){pw=window.open('','vsibm-presenter','width=760,height=560');if(!pw){toast('Your browser blocked the pop-up. Allow pop-ups for this file, or press N for on-screen notes.');return}
+  pw.document.open();pw.document.write(`<!doctype html><title>Presenter notes</title><style>body{font-family:'IBM Plex Sans',Arial,sans-serif;margin:0;padding:28px;font-size:22px;line-height:1.55;color:#161616}h4{margin:0 0 10px;font-size:16px;color:#6f6f6f;font-weight:500}.nx{margin-top:18px;font-size:16px;color:#6f6f6f}#clock{font-size:40px;font-weight:600;font-variant-numeric:tabular-nums}#top{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid #e0e0e0;padding-bottom:12px;margin-bottom:18px}#st{color:#0f62fe;font-size:16px}</style><div id="top"><span id="clock"></span><span id="st"></span></div><div id="body"></div><p style="font-size:14px;color:#8d8d8d;margin-top:30px">Use ← → here or on the main window.</p>`);pw.document.close();
+  pw.document.addEventListener('keydown',onKey);const tick=()=>{if(pw.closed)return;pw.document.getElementById('clock').textContent=new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});};tick();setInterval(tick,10000);renderNotes()}
+
+/* grid */
+function buildGrid(){const g=$('#grid .g');g.innerHTML='';slides.forEach((s,i)=>{const b=document.createElement('button');b.style.setProperty('--c',SEC[s.dataset.sec].c);b.className=i===cur?'cur':'';b.innerHTML=`<small>${i+1}  ${SEC[s.dataset.sec].t}</small><span>${s.dataset.title}</span>`;b.onclick=()=>{document.body.classList.remove('grid-open');go(i)};g.appendChild(b)})}
+
+/* toast */
+let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),3800)}
+
+/* keys */
+function onKey(e){const tg=e.target;if(tg&&(tg.tagName==='INPUT'||tg.tagName==='TEXTAREA'||tg.tagName==='SELECT'||tg.isContentEditable)){if(e.key==='Escape')tg.blur();return}
+  const k=e.key;
+  if(['ArrowRight','PageDown',' ','Enter'].includes(k)){e.preventDefault();next()}
+  else if(['ArrowLeft','PageUp','Backspace'].includes(k)){e.preventDefault();prev()}
+  else if(k==='Home')go(0);else if(k==='End')go(slides.length-1);
+  else if(k==='n'||k==='N')toggleNotes();
+  else if(k==='g'||k==='G')toggleGrid();
+  else if(k==='f'||k==='F')fs();
+  else if(k==='e'||k==='E')toggleEdit();
+  else if(k==='p'||k==='P')presenter();
+  else if(k==='r'||k==='R'){const r=$('[data-reveal]',slides[cur]);r&&r.click()}
+  else if(k==='Escape'){document.body.classList.remove('grid-open');$('#spot').classList.remove('open')}}
+document.addEventListener('keydown',onKey);
+const toggleNotes=()=>{document.body.classList.toggle('notes-open');$('#b-notes').classList.toggle('on')};
+const toggleGrid=()=>{buildGrid();document.body.classList.toggle('grid-open')};
+const fs=()=>{try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}catch(e){}};
+$('#b-prev').onclick=prev;$('#b-next').onclick=next;$('#b-notes').onclick=toggleNotes;$('#b-grid').onclick=toggleGrid;$('#b-fs').onclick=fs;$('#b-pres').onclick=presenter;$('#b-edit').onclick=()=>toggleEdit();$('#done-edit').onclick=()=>toggleEdit(false);
+
+/* ---------- edit mode + photos ---------- */
+$$('[data-edit]').forEach(el=>{const v=store.get('edit:'+el.dataset.edit);if(v!=null){el.textContent=v;el.removeAttribute('data-placeholder')}
+  el.addEventListener('input',()=>{el.removeAttribute('data-placeholder');store.set('edit:'+el.dataset.edit,el.textContent)})});
+function toggleEdit(force){const on=force??!document.body.classList.contains('editing');document.body.classList.toggle('editing',on);$('#b-edit').classList.toggle('on',on);
+  $$('[data-edit]').forEach(el=>on?el.setAttribute('contenteditable','true'):el.removeAttribute('contenteditable'));
+  if(on)toast('Edit mode: click any dashed text to rewrite it, or a photo box to add a photo. Changes save in this browser.')}
+let photoTarget=null;
+$$('[data-photo]').forEach(p=>{const v=store.get('photo:'+p.dataset.photo);if(v&&!$('img',p)){const im=new Image();im.src=v;im.alt='';p.appendChild(im)}
+  p.addEventListener('click',()=>{if(!document.body.classList.contains('editing')&&$('img',p))return;photoTarget=p;$('#file-in').click()})});
+$('#file-in').addEventListener('change',e=>{const f=e.target.files[0];if(!f||!photoTarget)return;const r=new FileReader();r.onload=()=>{
+  const img=new Image();img.onload=()=>{const c=document.createElement('canvas');const m=1200/Math.max(img.width,img.height);const s=Math.min(1,m);c.width=img.width*s;c.height=img.height*s;c.getContext('2d').drawImage(img,0,0,c.width,c.height);const url=c.toDataURL('image/jpeg',.85);
+    let im=$('img',photoTarget);if(!im){im=new Image();im.alt='';photoTarget.appendChild(im)}im.src=url;store.set('photo:'+photoTarget.dataset.photo,url)};img.src=r.result};r.readAsDataURL(f);e.target.value=''});
+$('#save-file').onclick=()=>{
+  $('#qa-data').textContent=JSON.stringify(QA);
+  toggleEdit(false);
+  const clone=document.documentElement.cloneNode(true);
+  $$('.slide',clone).forEach(s=>{s.classList.remove('active','past');delete s.dataset.at});
+  $$('.shown',clone).forEach(e=>e.classList.remove('shown'));
+  clone.querySelector('body').className='';clone.querySelector('#toast').className='';$$('#dock .on',clone).forEach(e=>e.classList.remove('on'));
+  ['#cloud','#flips','#bricks','#stack','#keys','#prompts','#bars','#breakdown','#scen-tabs','#pick-learn','#pick-build','#pledge','#notes','#toast'].forEach(s=>{const el=clone.querySelector(s);if(el&&s!=='#cloud')el.innerHTML='';});
+  const cl=clone.querySelector('#cloud');cl.innerHTML='<div class="empty">Shout it out</div>';
+  $$('.qa .qchip',clone).forEach(e=>e.remove());$$('.paths .pnode',clone).forEach(e=>e.remove());const ps=clone.querySelector('.paths svg');ps.innerHTML='';
+  const ds=clone.querySelector('#demo svg');ds.innerHTML='';$$('#demo .src',clone).forEach(e=>e.remove());clone.querySelector('#ans').textContent='';
+  $$('.progress',clone).forEach(e=>e.remove());clone.querySelector('#agenda').innerHTML='';
+  const html='<!DOCTYPE html>\n'+clone.outerHTML;
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([html],{type:'text/html'}));a.download='VS_IBM_Career_Session.html';document.body.appendChild(a);a.click();a.remove();
+  toast('Saved. Use the downloaded file on the presentation laptop — your text, photos and questions are baked in.')};
+
+/* ---------- hero dots ---------- */
+function dotField(canvas){const ctx=canvas.getContext('2d');let mx=-999,my=-999,run=false,t0=performance.now();
+  stage.addEventListener('mousemove',e=>{const r=stage.getBoundingClientRect();mx=(e.clientX-r.left)/scale;my=(e.clientY-r.top)/scale});
+  function frame(t){if(!run)return;ctx.clearRect(0,0,1600,900);const w=((t-t0)/9)%2400-400;
+    for(let y=20;y<900;y+=36)for(let x=20;x<1600;x+=36){const d=Math.hypot(x-mx,y-my);const wave=Math.max(0,1-Math.abs((x+y*.4)-w)/140);const m=Math.max(0,1-d/220);const k=Math.max(m,wave*.7);
+      ctx.fillStyle=k>0.02?`rgba(15,98,254,${.15+k*.7})`:'rgba(22,22,22,.10)';ctx.beginPath();ctx.arc(x,y,1.6+k*3.2,0,6.283);ctx.fill()}
+    requestAnimationFrame(frame)}
+  const sl=canvas.closest('.slide');sl.addEventListener('enter',()=>{if(!run){run=true;requestAnimationFrame(frame)}});
+  new MutationObserver(()=>{if(!sl.classList.contains('active'))run=false}).observe(sl,{attributes:true,attributeFilter:['class']})}
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches){dotField($('#dots'));dotField($('.dots2'))}
+
+/* ---------- word cloud ---------- */
+(()=>{const box=$('#cloud'),inp=$('#cloud-in');let words={};const cols=['#0f62fe','#8a3ffc','#007d79','#161616'];let ci=0;
+  function place(el){const W=box.clientWidth,H=box.clientHeight;const w=el.offsetWidth,h=el.offsetHeight;let best=null;
+    for(let a=0;a<60;a++){const x=30+Math.random()*Math.max(1,W-w-60),y=24+Math.random()*Math.max(1,H-h-48);const hit=Object.values(words).some(o=>o.el!==el&&x<o.x+o.el.offsetWidth+16&&x+w+16>o.x&&y<o.y+o.el.offsetHeight+8&&y+h+8>o.y);if(!hit){best=[x,y];break}if(!best)best=[x,y]}
+    return best}
+  function add(w){w=w.trim();if(!w)return;$('.empty',box)&&$('.empty',box).remove();const k=w.toLowerCase();
+    if(words[k]){const o=words[k];o.n++;o.el.style.fontSize=Math.min(130,40+o.n*18)+'px';requestAnimationFrame(()=>{const W=box.clientWidth,H=box.clientHeight;o.x=Math.min(o.x,W-o.el.offsetWidth-20);o.y=Math.min(o.y,H-o.el.offsetHeight-16);o.el.style.left=o.x+'px';o.el.style.top=o.y+'px'});return}
+    const el=document.createElement('span');el.className='word';el.textContent=w;el.style.color=cols[ci++%4];el.style.fontSize='40px';el.style.visibility='hidden';box.appendChild(el);
+    const o={el,n:1,x:0,y:0};words[k]=o;const [x,y]=place(el);o.x=x;o.y=y;el.style.left=x+'px';el.style.top=y+'px';el.style.visibility='visible'}
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter'){add(inp.value);inp.value=''}});
+  $$('[data-add]').forEach(b=>b.onclick=()=>add(b.dataset.add));
+  $('#cloud-clear').onclick=()=>{words={};box.innerHTML='<div class="empty">Shout it out</div>'}})();
+
+/* ---------- quizzes ---------- */
+$$('[data-quiz]').forEach(q=>{$$('.opt',q).forEach(o=>o.addEventListener('click',()=>{if(q.classList.contains('revealed'))return;$$('.opt',q).forEach(x=>x!==o&&x.classList.remove('picked'));o.classList.toggle('picked')}))});
+$$('[data-reveal]').forEach(b=>b.addEventListener('click',()=>{const q=$('[data-quiz]',b.closest('.slide'));const on=!q.classList.contains('revealed');q.classList.toggle('revealed',on);b.closest('.quiz-bar').classList.toggle('show-after',on);b.innerHTML=on?ic('rotate-ccw')+'Hide':ic('eye')+'Reveal'}));
+
+/* ---------- IBM or not ---------- */
+const FL=[['scan-barcode','The barcode',1,'1973','IBM engineer George Laurer designed the UPC barcode — the one on almost everything you buy.'],
+ ['globe','The World Wide Web',0,'1989','Invented by Tim Berners-Lee at CERN, a physics lab in Switzerland.'],
+ ['smartphone','The first smartphone',1,'1994','The IBM Simon had a touchscreen, email and apps — 13 years before the iPhone.'],
+ ['gamepad-2','The home video game console',0,'1972','The first one was the Magnavox Odyssey.'],
+ ['save','The floppy disk',1,'1971','IBM introduced it. It\u2019s why the "save" icon still looks like this.'],
+ ['bluetooth','Bluetooth',0,'1990s','Created by engineers at Ericsson in Sweden, and named after a Viking king.'],
+ ['trophy','Watson, the quiz-show AI',1,'2011','IBM Watson beat two human champions on the TV quiz show Jeopardy!'],
+ ['atom','A quantum computer anyone can use online',1,'2016','IBM put a real quantum computer on the cloud for anyone to try.']];
+$('#flips').innerHTML=FL.map(([i,n,y,yr,f])=>`<button class="flip"><div class="flip-in"><div class="face front">${ic(i)}<div><div class="nm">${n}</div></div></div><div class="face back ${y?'':'not'}"><div class="verdict">${y?'IBM':'Not IBM'}</div><div class="fact"><b>${yr}.</b> ${f}</div></div></div></button>`).join('');
+$$('#flips .flip').forEach(b=>b.onclick=()=>b.classList.toggle('flipped'));
+$('#flips').closest('.slide').addEventListener('enter',()=>$$('#flips .flip').forEach(b=>b.classList.remove('flipped')));
+
+/* ---------- journey ---------- */
+(()=>{const sl=$('#journey').closest('.slide');const ink=$('#journey .ink'),dot=$('#journey .dot'),nodes=$$('#journey .node');const L=ink.getTotalLength();
+  const lens=nodes.map(n=>{const cx=+n.getAttribute('cx');let lo=0,hi=L;for(let i=0;i<30;i++){const m=(lo+hi)/2;ink.getPointAtLength(m).x<cx?lo=m:hi=m}return lo});
+  ink.style.strokeDasharray=L;ink.style.strokeDashoffset=L;let pos=0,raf;
+  function to(target){cancelAnimationFrame(raf);const from=pos,t0=performance.now(),dur=900;
+    (function f(t){const k=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-k,3);pos=from+(target-from)*e;const p=ink.getPointAtLength(pos);dot.setAttribute('cx',p.x);dot.setAttribute('cy',p.y);ink.style.strokeDashoffset=L-pos;if(k<1)raf=requestAnimationFrame(f)})(performance.now())}
+  sl.addEventListener('step',e=>{const n=e.detail;nodes.forEach((nd,i)=>nd.classList.toggle('on',i<n));to(n?lens[n-1]:0)})})();
+
+/* ---------- LEGO ---------- */
+(()=>{const B=[['Shows the bus timing','monitor-smartphone',1,'#0f62fe'],['Knows where you are','map-pin',1,'#007d79'],['Live bus arrival data','bus',1,'#8a3ffc'],['Camera filters','camera',0,'#da1e28'],['Alert when the bus is near','bell-ring',1,'#0f62fe'],['Music player','music',0,'#f1c21b'],['Saves your favourite stops','star',1,'#007d79'],['3D game engine','box',0,'#8a3ffc']];
+  const bricks=$('#bricks'),stack=$('#stack'),res=$('#lego-res');
+  function reset(){bricks.innerHTML=B.map((b,i)=>`<button class="brick ${b[3]==='#f1c21b'?'dark':''}" style="--bc:${b[3]}" data-i="${i}">${ic(b[1])}${b[0]}</button>`).join('');stack.innerHTML='';res.textContent='';
+    $$('.brick',bricks).forEach(el=>el.onclick=()=>{const i=+el.dataset.i;const inS=$(`[data-i="${i}"]`,stack);if(inS){inS.remove();el.classList.remove('used')}else{const c=el.cloneNode(true);c.onclick=()=>{c.remove();el.classList.remove('used')};stack.appendChild(c);el.classList.add('used')}res.textContent=''})}
+  $('#lego-check').onclick=()=>{const used=$$('.brick',stack).map(e=>+e.dataset.i);let good=0,bad=0;$$('.brick',stack).forEach(e=>{const ok=B[+e.dataset.i][2];e.classList.toggle('good',!!ok);e.classList.toggle('bad',!ok);ok?good++:bad++});const need=B.filter(b=>b[2]).length;
+    res.innerHTML=bad?`<b style="color:var(--red)">${bad} block${bad>1?'s':''} we don't need.</b> Good builders leave things out too.`:good<need?`<b>${good} of ${need}</b> key blocks. What's missing?`:`<b style="color:var(--green)">That's a working bus app.</b> The skill isn't knowing every piece — it's knowing which pieces you need.`};
+  $('#lego-reset').onclick=reset;reset()})();
+
+/* ---------- calculator ---------- */
+(()=>{const d=$('#disp'),K=['7','8','9','÷','4','5','6','×','1','2','3','−','C','0','=','+'];let s='2+2',justEq=false;
+  $('#keys').innerHTML=K.map(k=>`<button class="${'÷×−+'.includes(k)?'op':k==='='?'eqk':''}">${k}</button>`).join('');
+  $$('#keys button').forEach(b=>b.onclick=()=>{const k=b.textContent;if(k==='C'){s='';}else if(k==='='){try{const ex=s.replace(/÷/g,'/').replace(/×/g,'*').replace(/−/g,'-');if(!/^[\d+\-*/. ]+$/.test(ex))throw 0;let v=Function('return ('+ex+')')();v=Math.round(v*1e8)/1e8;s=isFinite(v)?String(v):'Error'}catch(e){s='Error'}justEq=true;d.textContent=s;return}else{if(justEq&&/\d/.test(k))s='';if(s==='Error')s='';s+=k}justEq=false;d.textContent=s||'0'})})();
+
+/* ---------- AI predictor ---------- */
+(()=>{const P=[['After school, we went to eat…',[['chicken rice',46],['prata',29],['bubble tea',17],['homework',8]],'ok','It picked the most likely next words from patterns in lots of examples.'],
+  ['The sky is…',[['blue',71],['grey',14],['clear',9],['falling',6]],'ok','Usually right — because "the sky is blue" appears so often.'],
+  ['The number of r\u2019s in "strawberry" is…',[['two',58],['three',30],['four',8],['zero',4]],'wrong','Wrong! There are three. It picked the answer that sounded most likely, without checking.']];
+  const pr=$('#prompts'),pt=$('#ptext'),bars=$('#bars'),st=$('#stamp');let tmo;
+  pr.innerHTML=P.map((p,i)=>`<button class="chip" data-p="${i}">${['Snack','Sky','Strawberry'][i]}</button>`).join('');
+  $$('.chip',pr).forEach(b=>b.onclick=()=>{$$('.chip',pr).forEach(x=>x.classList.toggle('on',x===b));const [t,opts,kind,msg]=P[+b.dataset.p];pt.textContent=t;st.className='stamp';st.textContent='';clearTimeout(tmo);
+    bars.innerHTML=opts.map((o,i)=>`<div class="bar ${i===0?'top':''}"><b>${o[0]}</b><div class="track"><div class="fill"></div></div><span class="pc">${o[1]}%</span></div>`).join('');
+    requestAnimationFrame(()=>requestAnimationFrame(()=>$$('.fill',bars).forEach((f,i)=>f.style.width=opts[i][1]+'%')));
+    tmo=setTimeout(()=>{st.textContent=msg;st.className='stamp show '+kind},1300)})})();
+
+/* ---------- demo ---------- */
+(()=>{const demo=$('#demo'),svg=$('svg',demo);const S=[['database','Databases'],['file-text','Documents'],['sheet','Spreadsheets'],['history','Past cases'],['building-2','Business systems']];
+  svg.innerHTML=S.map((s,i)=>{const y=10+i*96+39;const p=`M290 ${y} C 400 ${y}, 400 240, 500 240`;return `<path class="wire" d="${p}"/><path class="flow" d="${p}"/>`}).join('')+`<path class="wire" d="M800 240 C 840 240, 840 120, 880 120"/><path class="flow" d="M800 240 C 840 240, 840 120, 880 120"/>`;
+  S.forEach((s,i)=>{const d=document.createElement('div');d.className='src';d.style.top=(10+i*96)+'px';d.innerHTML=ic(s[0])+s[1];demo.appendChild(d)});
+  const A='Seal kit SK-118 fits pump P-220.\n14 in stock at Warehouse B.\nThe same fault was fixed with this kit in March (case #4471).';let tm=[];
+  function reset(){tm.forEach(clearTimeout);tm=[];demo.classList.remove('run');$$('.src',demo).forEach(s=>s.classList.remove('lit'));$('#ans').textContent=''}
+  $('#ask').onclick=()=>{reset();demo.classList.add('run');$$('.src',demo).forEach((s,i)=>tm.push(setTimeout(()=>s.classList.add('lit'),250*i)));
+    let k=0;tm.push(setTimeout(function type(){$('#ans').textContent=A.slice(0,++k);if(k<A.length)tm.push(setTimeout(type,22));else demo.classList.remove('run')},1700))};
+  demo.closest('.slide').addEventListener('enter',reset)})();
+
+/* ---------- pathways ---------- */
+(()=>{const box=$('#paths'),svg=$('svg',box);
+  const N={sec:[90,260,'Secondary school'],jc:[470,100,'JC'],poly:[470,260,'Polytechnic'],ite:[470,420,'ITE'],uni:[880,70,'University'],dip:[880,190,'Diploma'],work:[880,330,'Work'],learn:[880,450,'Further learning'],career:[1250,260,'Technology career']};
+  const E=[['sec','jc'],['sec','poly'],['sec','ite'],['jc','uni'],['jc','work'],['poly','uni'],['poly','work'],['poly','learn'],['ite','dip'],['ite','work'],['ite','poly','v'],['uni','career'],['dip','career'],['work','career'],['learn','career'],['work','learn','v']];
+  const cur=(a,b,v)=>{const [x1,y1]=N[a],[x2,y2]=N[b];if(v){const off=a==='ite'?38:36,off2=a==='ite'?70:100,bx=x1-off-70;return `M${x1-off} ${y1} C ${bx} ${y1}, ${bx} ${y2}, ${x2-off2} ${y2}`}const mx=(x1+x2)/2;return `M${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`};
+  svg.innerHTML=E.map(([a,b,v])=>`<path class="e" data-a="${a}" data-b="${b}" d="${cur(a,b,v)}"/>`).join('');
+  const on=new Set();
+  Object.entries(N).forEach(([k,[x,y,l]])=>{const b=document.createElement('button');b.className='pnode'+(k==='career'||k==='sec'?' end':'');b.style.left=x+'px';b.style.top=y+'px';b.textContent=l;b.dataset.k=k;b.onclick=()=>{on.has(k)?on.delete(k):on.add(k);upd()};box.appendChild(b)});
+  function upd(){$$('.pnode',box).forEach(b=>b.classList.toggle('on',on.has(b.dataset.k)));$$('.e',svg).forEach(p=>p.classList.toggle('on',on.has(p.dataset.a)&&on.has(p.dataset.b)))}
+  $('#paths-reset').onclick=()=>{on.clear();upd()}})();
+
+/* ---------- day rail ---------- */
+(()=>{const sl=$('#day').closest('.slide');sl.addEventListener('step',e=>{const n=Math.min(8,e.detail);$('#day .rail i').style.width=n<=1?'0%':((n-1)/7*100)+'%'})})();
+
+/* ---------- who would you need ---------- */
+(()=>{const SC=[['Build a robot that recognises objects',[['Hardware','var(--teal)','The body, motors, camera and chips.'],['AI','var(--purple)','Learns what a cup, a ball or a cat looks like.'],['Software','var(--blue)','Connects it all and tells the robot what to do.']]],
+  ['Build a smart watch that measures health data',[['Hardware','var(--teal)','Sensors, battery and a screen small enough for your wrist.'],['AI','var(--purple)','Spots patterns in heart rate and sleep.'],['Software','var(--blue)','The app that shows you what it all means.']]]];
+  const tabs=$('#scen-tabs'),q=$('#who'),bd=$('#breakdown');
+  function show(i){$$('.chip',tabs).forEach((c,k)=>c.classList.toggle('on',k===i));$('#scen').textContent=`"I want to ${SC[i][0].toLowerCase()}. Who would I need?"`;
+    bd.innerHTML=SC[i][1].map(([t,c,d])=>`<div style="--c:${c}"><b>${t}</b>${d}</div>`).join('');q.classList.remove('revealed');$$('.opt',q).forEach(o=>o.classList.remove('picked'));const r=$('[data-reveal]',q.closest('.slide'));r.innerHTML=ic('eye')+'Reveal';r.closest('.quiz-bar').classList.remove('show-after')}
+  tabs.innerHTML=SC.map((s,i)=>`<button class="chip">Scenario ${i+1}</button>`).join('');$$('.chip',tabs).forEach((c,i)=>c.onclick=()=>show(i));show(0)})();
+
+/* ---------- Q&A ---------- */
+let QA;try{QA=JSON.parse(store.get('qa')||$('#qa-data').textContent)}catch(e){QA=[]}
+const CAT={ai:['AI','var(--purple)','sparkles'],sw:['Software','var(--blue)','code-xml'],hw:['Hardware','var(--teal)','cpu']};
+function renderQA(){$$('#qa .qchip').forEach(e=>e.remove());QA.forEach((q,i)=>{const b=document.createElement('button');b.className='qchip'+(q[2]?' done':'');b.innerHTML=ic('message-circle-question')+`<span>${q[1].replace(/</g,'&lt;')}</span>`;
+  b.onclick=()=>{if(q[3]){q[2]=!q[2];store.set('qa',JSON.stringify(QA));renderQA();return}q[3]=1;$('#spot-cat').innerHTML=ic(CAT[q[0]][2])+CAT[q[0]][0];$('#spot-cat').style.color=CAT[q[0]][1];$('#spot-q').textContent=q[1];$('#spot').classList.add('open')};
+  $(`#qa .col[data-cat="${q[0]}"]`).appendChild(b)})}
+$('#spot').onclick=()=>{$('#spot').classList.remove('open');QA.forEach(q=>{if(q[3]&&!q[2]){q[2]=1}});QA.forEach(q=>delete q[3]);store.set('qa',JSON.stringify(QA));renderQA()};
+$('#qa-in').addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.value.trim()){QA.push([$('#qa-cat').value,e.target.value.trim()]);e.target.value='';store.set('qa',JSON.stringify(QA));renderQA()}});
+renderQA();
+
+/* ---------- categories, steps5 ---------- */
+$$('#cats .cat').forEach(c=>c.onclick=()=>c.classList.toggle('on'));
+$$('#steps5 li').forEach(li=>li.onclick=()=>li.classList.toggle('done'));
+
+/* ---------- timer ---------- */
+$$('.timer').forEach(t=>{const total=+t.dataset.minutes*60;let left=total,iv=null;const clk=$('.clock',t),bar=$('.tbar i',t),go=$('[data-t="go"]',t);
+  const draw=()=>{clk.textContent=`${Math.floor(left/60)}:${String(left%60).padStart(2,'0')}`;bar.style.width=(left/total*100)+'%';t.classList.toggle('low',left<=120&&left>0);t.classList.toggle('done',left===0)};
+  go.onclick=()=>{if(iv){clearInterval(iv);iv=null;go.innerHTML=ic('play')+'Resume'}else{if(left===0)left=total;iv=setInterval(()=>{left=Math.max(0,left-1);draw();if(!left){clearInterval(iv);iv=null;go.innerHTML=ic('play')+'Start'}},1000);go.innerHTML=ic('pause')+'Pause'}};
+  $('[data-t="reset"]',t).onclick=()=>{clearInterval(iv);iv=null;left=total;go.innerHTML=ic('play')+'Start';draw()};draw()});
+
+/* ---------- mission ---------- */
+(()=>{const L=['How AI works','How to code','How robots work','How games are made','Cybersecurity','Data'],Bd=['An AI chatbot','A game','A robot','A website','An AI assistant','An automation'];let l=null,b=null;
+  const mk=(el,arr,set)=>{el.innerHTML=arr.map(x=>`<button class="chip">${x}</button>`).join('')+'<input placeholder="Something else…">';
+    $$('.chip',el).forEach(c=>c.onclick=()=>{$$('.chip',el).forEach(x=>x.classList.toggle('on',x===c));set(c.textContent);draw()});
+    $('input',el).addEventListener('input',e=>{$$('.chip',el).forEach(x=>x.classList.remove('on'));set(e.target.value||null);draw()})};
+  const draw=()=>{$('#pledge').innerHTML=`I want to learn <em>${(l||'…').toLowerCase().replace(/</g,'&lt;')}</em> so I can build <em>${(b||'…').toLowerCase().replace(/</g,'&lt;')}</em>${b?'.':''}`};
+  mk($('#pick-learn'),L,v=>l=v);mk($('#pick-build'),Bd,v=>b=v);draw()})();
+
+/* ---------- agent designer ---------- */
+$$('#agent-qs input').forEach(i=>i.addEventListener('input',()=>{$(`[data-o="${i.dataset.k}"]`).textContent=i.value||'…'}));
+$('#agent-name').addEventListener('focus',e=>{if(e.target.value==='Name your agent')e.target.select()});
+
+/* ---------- idle dock ---------- */
+let idl;addEventListener('mousemove',()=>{document.body.classList.add('idle-off');clearTimeout(idl);idl=setTimeout(()=>document.body.classList.remove('idle-off'),2200)});
+
+/* start */
+const h=parseInt(location.hash.slice(1));go(isNaN(h)?0:h-1);
+if(!store.get('seen')){setTimeout(()=>toast('→ or Space to move on. N for notes, P for a presenter window, E to add your own text and photos.'),2600);store.set('seen','1')}
+})();
+</script>
+</body>
+</html>
