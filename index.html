@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Curiosity to Careers — Victoria School × IBM</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230F62FE'/><text x='50' y='66' text-anchor='middle' font-family='Helvetica Neue,Arial,sans-serif' font-weight='900' font-size='44' textLength='80' lengthAdjust='spacingAndGlyphs' fill='%23fff'>IBM</text><rect x='0' y='36.4' width='100' height='1.6' fill='%230F62FE'/><rect x='0' y='40.4' width='100' height='1.6' fill='%230F62FE'/><rect x='0' y='44.4' width='100' height='1.6' fill='%230F62FE'/><rect x='0' y='48.4' width='100' height='1.6' fill='%230F62FE'/><rect x='0' y='52.4' width='100' height='1.6' fill='%230F62FE'/><rect x='0' y='56.4' width='100' height='1.6' fill='%230F62FE'/><rect x='0' y='60.4' width='100' height='1.6' fill='%230F62FE'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
@@ -48,7 +48,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,[contenteditable
 .progress button{flex:var(--w);height:100%;border:0;padding:0;background:var(--line);border-radius:2px;position:relative;overflow:hidden}
 .progress button i{position:absolute;inset:0;width:var(--f,0%);background:var(--c);transition:width .5s var(--ease)}
 .progress button::after{content:attr(data-label);position:absolute;bottom:14px;left:0;font-size:15px;color:var(--ink-2);white-space:nowrap;opacity:0;transition:opacity .2s}
-.progress:hover button::after{opacity:1}
+.progress button:hover::after,.progress button:focus-visible::after{opacity:1}
 .progress button{overflow:visible}
 .progress button i{border-radius:2px}
 
@@ -310,6 +310,7 @@ body.editing [data-edit]:focus{outline-style:solid;background:var(--blue-10)}
 .stop .tm{font-size:26px;font-weight:600;font-variant-numeric:tabular-nums}
 .stop .what{font-size:20px;line-height:1.3;color:var(--ink-2);max-width:170px}
 .day-end{margin-top:64px;font-size:34px;text-align:center}
+.day.hw .rail i{background:var(--teal)} .day.hw .stop.shown .circ{border-color:var(--teal);color:var(--teal)}
 
 /* ---------- hardware stack ---------- */
 .stackd{display:flex;flex-direction:column;gap:12px;margin-top:24px;max-width:1344px}
@@ -795,6 +796,25 @@ body.editing #editbar{display:flex}
   <aside class="notes">Bring a physical object if you can (a board, a component, a prototype) and pass it around. Pick the chips that match your actual role and talk to two or three of them.</aside>
 </section>
 
+<!-- ============ 23b. WZ day in the life ============ -->
+<section class="slide" data-sec="wz" data-title="Wei Zheng: a day in my life">
+  <h2 class="title">A day in my life</h2>
+  <div class="day hw" id="day-wz">
+    <div class="rail"><i></i></div>
+    <div class="stops">
+      <div class="stop" data-step="1"><div class="circ"><i data-i="coffee"></i></div><div class="tm">9:00</div><div class="what">Catch up on emails and meetings</div></div>
+      <div class="stop" data-step="2"><div class="circ"><i data-i="lightbulb"></i></div><div class="tm">10:00</div><div class="what">Product discussion</div></div>
+      <div class="stop" data-step="3"><div class="circ"><i data-i="users"></i></div><div class="tm">11:00</div><div class="what">Customer meeting</div></div>
+      <div class="stop" data-step="4"><div class="circ"><i data-i="soup"></i></div><div class="tm">12:00</div><div class="what">Lunch</div></div>
+      <div class="stop" data-step="5"><div class="circ"><i data-i="wrench"></i></div><div class="tm">1:00</div><div class="what">Tinker with hardware and components</div></div>
+      <div class="stop" data-step="6"><div class="circ"><i data-i="file-text"></i></div><div class="tm">2:00</div><div class="what">Turn requirements into specifications</div></div>
+      <div class="stop" data-step="7"><div class="circ"><i data-i="handshake"></i></div><div class="tm">4:00</div><div class="what">Supplier meeting</div></div>
+      <div class="stop" data-step="8"><div class="circ"><i data-i="flask-conical"></i></div><div class="tm">5:00</div><div class="what">Model and test samples</div></div>
+    </div>
+  </div>
+  <aside class="notes">Press → through the day. Contrast with Conner's day: more time with customers, suppliers and physical parts. At 2:00, explain what a specification is (turning "what the customer wants" into exact numbers a part must meet). At 5:00, describe a real sample you tested.</aside>
+</section>
+
 <!-- ============ 24. WZ day + skills ============ -->
 <section class="slide" data-sec="wz" data-title="Wei Zheng: day and skills">
   <h2 class="title" style="margin-bottom:10px">What engineering takes</h2>
@@ -1222,7 +1242,7 @@ $('#flips').closest('.slide').addEventListener('enter',()=>$$('#flips .flip').fo
   $('#paths-reset').onclick=()=>{on.clear();upd()}})();
 
 /* ---------- day rail ---------- */
-(()=>{const sl=$('#day').closest('.slide');sl.addEventListener('step',e=>{const n=Math.min(8,e.detail);$('#day .rail i').style.width=n<=1?'0%':((n-1)/7*100)+'%'})})();
+$$('.day').forEach(d=>{const k=$$('.stop',d).length;d.closest('.slide').addEventListener('step',e=>{const n=Math.min(k,e.detail);$('.rail i',d).style.width=n<=1?'0%':((n-1)/(k-1)*100)+'%'})});
 
 /* ---------- who would you need ---------- */
 (()=>{const SC=[['Build a robot that recognises objects',[['Hardware','var(--teal)','The body, motors, camera and chips.'],['AI','var(--purple)','Learns what a cup, a ball or a cat looks like.'],['Software','var(--blue)','Connects it all and tells the robot what to do.']]],
